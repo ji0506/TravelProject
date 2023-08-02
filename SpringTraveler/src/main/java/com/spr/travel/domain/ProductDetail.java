@@ -24,6 +24,4 @@ public class ProductDetail {
 	private String detailImage;
 	
 	private String detailViewcnt;
-	
-
 }
