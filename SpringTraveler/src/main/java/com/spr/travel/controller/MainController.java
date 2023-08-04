@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 
 	
-	@GetMapping("/main.do")
+	@GetMapping("/main.html")
 	public String main(Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
 
 		return "main/main";
