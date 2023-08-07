@@ -38,6 +38,11 @@ public class User {
 	
 	private String userTypeCd;
 
+	public User orElseThrow(Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 }
