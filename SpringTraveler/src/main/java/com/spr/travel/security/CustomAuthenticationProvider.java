@@ -34,8 +34,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String userID = (String) authentication.getPrincipal();
 		String password = (String) authentication.getCredentials();
 		
-		
-		
 		String hashedPassword = sha256Hash(password);// 스프링 시큐리티를 통해 암하화해도됨. 함호화 방식은 sha256. 그 외에 암호화 방식으로는 sha1, base64등이 존재.
 		
 		hashedPassword  = hashedPassword.toUpperCase();

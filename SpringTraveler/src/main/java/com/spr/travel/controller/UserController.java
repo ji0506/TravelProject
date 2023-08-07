@@ -7,4 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/member/*")
 public class UserController {
 
+	
+	@RequestMapping("/main.do")
+	public String list() {	
+		return "member/login";
+	}
+	
+	
 }

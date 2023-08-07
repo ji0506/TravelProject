@@ -18,12 +18,12 @@ public class Categorie {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int kateNo;
+	private int CateNo;
 	
 	
-	private String kateName;
+	private String CateName;
 	
 	private String userTypeCd;
 	
-	private String kateDetail;
+	private String CateDetail;
 }
