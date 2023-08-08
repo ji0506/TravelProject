@@ -15,9 +15,13 @@ public class PrincipalDetail implements UserDetails {
 	 */
 	private static final long serialVersionUID = 1L;
 	private User user;
+	
+	private String userName;
+
 
 	public PrincipalDetail(User user) {
 		this.user = user;
+		this.userName = user.getUserName();
 	}
 
 	@Override
@@ -63,6 +67,14 @@ public class PrincipalDetail implements UserDetails {
 			return "ROLE_USER";
 		});
 		return collectors;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

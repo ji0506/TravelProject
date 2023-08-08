@@ -7,16 +7,25 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.spr.travel.security.*;
 
 import com.spr.travel.auth.PrincipalDetailService;
 import com.spr.travel.security.CustomAuthenticationProvider;
 
+import lombok.RequiredArgsConstructor;
+
 //@EnableWebSecurity //시큐리티 필터가 등록
 //@EnableGlobalMethodSecurity(prePostEnabled = true) //특정 주소로 접근을 하면 권한 및 인증을 미리 체크
 @Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
+	
 	private PrincipalDetailService userDetailsService;
 	
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -47,10 +56,10 @@ public class SecurityConfig {
 		                .usernameParameter("userId")
 		                .passwordParameter("userPwd")
 						.defaultSuccessUrl("/main/main.do") // 로그인 성공 후 이동할 페이지
-//	                    .successHandler(new MemberAuthSuccessHandler()) // 로그인 성공 후 처리할 핸들러
+	                    .successHandler(new LoginSuccessHandler()) // 로그인 성공 후 처리할 핸들러
 						.permitAll()
 					.and()
-					.logout().logoutUrl("/member/login/logout") // 로그아웃 처리 URL 설정
+					.logout().logoutUrl("/member/logout.do") // 로그아웃 처리 URL 설정
 					.logoutSuccessUrl("/member/login/loginForm?logout=1") // 로그아웃 성공 후 이동할 페이지
 					.deleteCookies("JSESSIONID"); // 로그아웃 후 쿠키 삭제
 			} catch (Exception e) {
@@ -59,10 +68,17 @@ public class SecurityConfig {
 		});
 		return http.build();
 	}
+    @Bean
+    public UserDetailsService userDetailsService() {
+    	userDetailsService = new PrincipalDetailService();
+        return userDetailsService;
+    }
 	
     @Bean
     public AuthenticationManager authenticationManager() {
         return new ProviderManager(new CustomAuthenticationProvider());
     }
+    
+
 
 }

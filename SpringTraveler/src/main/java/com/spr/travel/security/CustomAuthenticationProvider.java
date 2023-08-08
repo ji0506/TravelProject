@@ -17,9 +17,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.spr.travel.auth.PrincipalDetail;
 import com.spr.travel.domain.User;
 import com.spr.travel.service.UserService;
 
@@ -28,6 +30,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private UserDetailsService userDetailsService;
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -38,6 +43,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		
 		hashedPassword  = hashedPassword.toUpperCase();
 		User user = service.getLoginUser(userID);
+//		PrincipalDetail dbUser = (PrincipalDetail) userDetailsService.loadUserByUsername(user.getUserId());
 
 		if (user == null) {
 			throw new UsernameNotFoundException("아이디 또는 패스워드가 일치하지 않습니다.");
@@ -49,12 +55,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			errMsg = "아이디 또는 패스워드가 일치하지 않습니다.";
 			throw new BadCredentialsException(errMsg);
 		}
-	        
+	       
+
 		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
         roles.add(new SimpleGrantedAuthority("ROLE_USER"));
         
-        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(userID, password, roles);
-//        result.setDetails(new CustomUserDetails());
+        UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(user, password, roles);
+        result.setDetails(user);
 
 		
         return result;
