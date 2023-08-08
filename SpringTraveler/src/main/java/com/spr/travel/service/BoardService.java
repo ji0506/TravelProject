@@ -7,21 +7,20 @@ import org.springframework.stereotype.Service;
 
 import com.spr.travel.domain.Board;
 import com.spr.travel.domain.Product;
-import com.spr.travel.domain.User;
 import com.spr.travel.repository.BoardRepository;
 import com.spr.travel.repository.ProductRepository;
-import com.spr.travel.repository.UserRepository;
 
 @Service
 public class BoardService {
-
-	@Autowired
-	private BoardRepository boardRepository ;
-
 	
+	
+	@Autowired
+	private BoardRepository BoardRepository;
 
 	public List<Board> getBoardList(){
-		return boardRepository.findAll();
-		
+		return BoardRepository.findAll();
+	}
+	public void Write(Board qvo) throws Exception {
+		BoardRepository.save(qvo);
 	}
 }

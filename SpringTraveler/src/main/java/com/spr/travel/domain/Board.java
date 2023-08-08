@@ -33,12 +33,25 @@ public class Board implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date regDate;
 
-	private int kateNo;
+	private int cateNo;
 	
 	private int voteNo;
 
 	private int cnt;
 	
 	private String userId;
+
+	
+	public Board() {
+	
+	}
+
+	public Board(String title, String content, int cateNo) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.cateNo = cateNo;
+	}
+
 
 }
