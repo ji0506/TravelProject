@@ -6,7 +6,7 @@
 	<link rel="stylesheet" th:href="@{/bootstrap-5.2.0-dist/css/bootstrap.min.css}">
 	<link rel="stylesheet" th:href="@{/css/btn-primary.css}">
 	<link rel="stylesheet" th:href="@{/css/style.css}">
-	<script src="/js/jquery.js"/>"></script>
+
 </head>
 
 <body class="d-flex flex-column vh-100">
@@ -129,7 +129,7 @@
 							<h5 class="card-title">[[${item.proName}]]</h5>
 						</div>
 						<div class="card-body">
-							<a href="/pro/${product.product_num}" class="btn btn-outline-secondary">바로가기</a>
+							<a href="/pro/${product.proNo}" class="btn btn-outline-secondary">바로가기</a>
 						</div>
 					</div>
 				</div>
@@ -139,4 +139,5 @@
 	<div th:insert="~{/common/footer}"></div>
 
 </body>
+
 </html>

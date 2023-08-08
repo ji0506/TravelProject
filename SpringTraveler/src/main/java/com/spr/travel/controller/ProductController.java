@@ -17,14 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 @Controller
-@RequestMapping("/pro/*")
+@RequestMapping("/products/*")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
-
-    @Autowired
-    private ProductFileService productFileService;
 
     @Autowired
     private ProductRestService productRestService;
@@ -44,7 +41,7 @@ public class ProductController {
     public String renderDetail(@PathVariable String id, HttpServletRequest req, HttpServletResponse res, Model model) {
         productRestService.updateViewcnt(req, res, id);
         ProductDetail product = productRestService.getFullProductById(id);
-        if (product == null) return "/products/index";
+        if (product == null) return "products/index";
         model.addAttribute("product", product);
         return "products/detail";
     }
