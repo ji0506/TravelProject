@@ -1,5 +1,8 @@
-package com.spr.travel.controller;
+package com.spr.travel.Member;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.spr.travel.domain.Product;
 import com.spr.travel.domain.Reservation;
 import com.spr.travel.domain.User;
-import com.spr.travel.service.UserService;
+import com.spr.travel.Member.UserService;
 
 @Controller
 @RequestMapping("/member/*")
@@ -63,6 +66,46 @@ public class UserController {
         }
 		return "redirect:/main/main.do";
 	}
-	
-	
+
+	@RequestMapping("/join.do")
+	public String join(ModelMap model,HttpServletRequest request, HttpServletResponse response) {
+
+
+		return "/member/join";
+	}
+
+	@RequestMapping("/save.do")
+	public String save(User user) {
+
+		user.setUserPwd(sha256Hash(user.getUserPwd()));
+		userService.createUser(user);
+
+		return "redirect:/member/main.do";
+	}
+
+
+
+	public String sha256Hash(String input) {
+		try {
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+
+			// 해시 값을 16진수 문자열로 변환
+			StringBuilder hexString = new StringBuilder();
+			for (byte b : hash) {
+				String hex = Integer.toHexString(0xff & b);
+				if (hex.length() == 1) {
+					hexString.append('0');
+				}
+				hexString.append(hex);
+			}
+
+			return hexString.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+
 }
