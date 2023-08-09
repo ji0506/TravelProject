@@ -2,15 +2,15 @@ package com.spr.travel.domain;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Entity
 @Data
+@Table(name ="user")
 public class User {
 
 	@Id
@@ -19,7 +19,7 @@ public class User {
 	private String userPwd;
 
 	private String userName;
-	
+
 	private String userEmail;
 
 	private String userCp;
@@ -27,22 +27,15 @@ public class User {
 	private String userAddr;
 
 	private String userDaddr;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date regDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateDate;
-	
+
 	private String userGrade;
-	
+
 	private String userTypeCd;
-
-	public User orElseThrow(Object object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-	
 }
+

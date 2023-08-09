@@ -1,4 +1,4 @@
-package com.spr.travel.controller;
+package com.spr.travel.Member;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.spr.travel.domain.Product;
 import com.spr.travel.domain.Reservation;
 import com.spr.travel.domain.User;
-import com.spr.travel.service.UserService;
+import com.spr.travel.Member.UserService;
 
 @Controller
 @RequestMapping("/member/*")
@@ -63,6 +63,22 @@ public class UserController {
         }
 		return "redirect:/main/main.do";
 	}
-	
-	
+
+	@RequestMapping("/join.do")
+	public String join(ModelMap model,HttpServletRequest request, HttpServletResponse response) {
+
+
+		return "/member/join";
+	}
+
+	@RequestMapping("/save.do")
+	public String save(User user) {
+
+		userService.createUser(user);
+
+		return "redirect:/member/main.do";
+	}
+
+
+
 }
