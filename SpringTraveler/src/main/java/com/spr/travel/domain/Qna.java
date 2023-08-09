@@ -19,8 +19,10 @@ public class Qna implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(length=11)
 	private int qnaNo;
 
+	@Column(length=40)
 	private String qnaTitle;
 
 	@Lob
@@ -29,8 +31,10 @@ public class Qna implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date regDate;
 	
+	@Column(length=11)
 	private String userId;
 
+	@Column(length=5)
 	private int cnt;
 
 	

@@ -1,10 +1,14 @@
 package com.spr.travel.controller;
 
-import com.spr.travel.domain.Product;
-import com.spr.travel.domain.ProductDetail;
-import com.spr.travel.service.ProductFileService;
-import com.spr.travel.service.ProductRestService;
-import com.spr.travel.service.ProductService;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import com.spr.travel.domain.Product;
+import com.spr.travel.domain.ProductDetail;
+import com.spr.travel.service.ProductRestService;
+import com.spr.travel.service.ProductService;
 
 @Controller
 @RequestMapping("/products/*")
@@ -37,6 +42,7 @@ public class ProductController {
 
         return "products/index";
     }
+    
     @GetMapping("/{id}")
     public String renderDetail(@PathVariable String id, HttpServletRequest req, HttpServletResponse res, Model model) {
         productRestService.updateViewcnt(req, res, id);

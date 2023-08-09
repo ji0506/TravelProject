@@ -3,7 +3,6 @@ package com.spr.travel.Member;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +19,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.spr.travel.domain.Product;
-import com.spr.travel.domain.Reservation;
+import com.mysql.cj.Session;
 import com.spr.travel.domain.User;
-import com.spr.travel.Member.UserService;
 
 @Controller
 @RequestMapping("/member/*")
@@ -64,6 +61,12 @@ public class UserController {
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
+        
+		HttpSession session = request.getSession();
+
+        
+		session.removeAttribute("user");
+
 		return "redirect:/main/main.do";
 	}
 
