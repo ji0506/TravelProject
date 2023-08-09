@@ -57,7 +57,7 @@
 			<div class="col-1"></div>
 			<div class="col-10 row p-3">
 				<h2 class="mb-4">여행지 검색</h2>
-				<form id="searchForm" action="${contextPath}/products/search">
+				<form id="searchForm" th:action="@{products/search}">
 					<div class="row">
 						<div class="col-lg-3">
 							<div class="input-group mb-3">
@@ -115,25 +115,36 @@
 	
 		<section class="row mb-3">
 			<h2 class="mb-4">최고의 여행지</h2>
-			<th:block th:each="item, stat : ${list}" th:if="${stat.index} &lt; 8">
-				<div class="col-md-6 col-xl-3">
-					<div class="card border-0 mx-auto" style="width: 18rem;">
-						<th:block th:if="${1 == katTargetNo}" class="active">
-							<img src="${contextPath}/attach${item.detail_title_image}" class="card-img-top" alt="...">
-						</th:block>
-						<th:block th:unless="${1 == katTargetNo}">
-							<img src="https://source.unsplash.com/random" class="card-img-top" alt="...">
-						</th:block>
-	
-						<div class="card-body tiny-index">
-							<h5 class="card-title">[[${item.proName}]]</h5>
-						</div>
-						<div class="card-body">
-							<a href="/pro/${product.proNo}" class="btn btn-outline-secondary">바로가기</a>
-						</div>
+
+			<div th:if="${not #lists.isEmpty(list)}" th:each="product : ${list}" class="col-md-6 col-xl-3">
+				<div class="card border-0 mx-auto" style="width: 18rem;">
+					<div th:if="${not #strings.isEmpty(item.detail_image)}">
+						<img th:src="${contextPath}/attach${item.detail_image}" class="card-img-top" alt="...">
+					</div>
+					<div th:unless="${not #strings.isEmpty(product.detail_image)}">
+						<img src="https://source.unsplash.com/random" class="card-img-top" alt="...">
+					</div>
+					<div class="card-body tiny-index">
+						<h5 class="card-title" th:text="${item.pro_name}"></h5>
+					</div>
+					<div class="card-body">
+						<a th:href="${contextPath}/product/${item.pro_no}" class="btn btn-outline-secondary">바로가기</a>
 					</div>
 				</div>
-			</th:block>
+			</div>
+			<div th:unless="${not #lists.isEmpty(list)}" th:each="i : ${#numbers.sequence(1, 4)}" class="col-md-6 col-xl-3">
+				<div class="card border-0 mx-auto" style="width: 18rem;">
+					<img src="https://source.unsplash.com/random" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">품절</h5>
+						<p class="card-text">
+							죄송합니다 현재 모든 상품이 품절되었습니다.
+							상품 업데이트를 기다려 주세요!
+							빠른 시간 내에 최고의 여행 상품을 준비하겠습니다!
+						</p>
+					</div>
+				</div>
+			</div>
 		</section>
 	</section>
 	<div th:insert="~{/common/footer}"></div>

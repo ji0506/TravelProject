@@ -15,7 +15,7 @@ import com.spr.travel.domain.Product;
 import com.spr.travel.service.ProductService;
 
 @Controller
-@RequestMapping("/main/*")
+@RequestMapping("*")
 public class MainController {
 
 	@Autowired
@@ -29,6 +29,6 @@ public class MainController {
 		
 		model.addAttribute("list", list);
 		
-		return "main/main";
+		return "main";
 	}
 }

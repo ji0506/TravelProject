@@ -3,14 +3,14 @@ package com.spr.travel.service;
 import com.spr.travel.domain.Product;
 import com.spr.travel.domain.ProductDetail;
 import com.spr.travel.reservation.ReservationVO;
-import org.springframework.stereotype.Service;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.util.List;
 
-@Service
+
 public interface ProductRestService {
     List<Product> getAllList();
 
@@ -32,7 +32,7 @@ public interface ProductRestService {
 
     int updateViewcnt(HttpServletRequest req, HttpServletResponse res, String id);
 
-    ReservationVO getReservationOfMember(String member_id, String product_num);
+    ReservationVO getReservationOfMember(String userId, String proNo);
 
     int deleteProduct(int id);
 

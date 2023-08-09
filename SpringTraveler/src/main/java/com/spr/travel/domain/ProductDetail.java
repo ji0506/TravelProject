@@ -22,6 +22,56 @@ public class ProductDetail {
 	private String detailInfo;
 	
 	private String detailImage;
+
+	private String schedule;
 	
 	private String detailViewcnt;
+
+	public int getDetailNo() {
+		return detailNo;
+	}
+
+	public void setDetailNo(int detailNo) {
+		this.detailNo = detailNo;
+	}
+
+	public int getProNo() {
+		return proNo;
+	}
+
+	public void setProNo(int proNo) {
+		this.proNo = proNo;
+	}
+
+	public String getDetailInfo() {
+		return detailInfo;
+	}
+
+	public void setDetailInfo(String detailInfo) {
+		this.detailInfo = detailInfo;
+	}
+
+	public String getDetailImage() {
+		return detailImage;
+	}
+
+	public void setDetailImage(String detailImage) {
+		this.detailImage = detailImage;
+	}
+
+	public String getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(String schedule) {
+		this.schedule = schedule;
+	}
+
+	public String getDetailViewcnt() {
+		return detailViewcnt;
+	}
+
+	public void setDetailViewcnt(String detailViewcnt) {
+		this.detailViewcnt = detailViewcnt;
+	}
 }
