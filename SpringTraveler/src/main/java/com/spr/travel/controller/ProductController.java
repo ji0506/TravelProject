@@ -2,6 +2,7 @@ package com.spr.travel.controller;
 
 import com.spr.travel.domain.Product;
 import com.spr.travel.domain.ProductDetail;
+import com.spr.travel.domain.Reservation;
 import com.spr.travel.domain.User;
 import com.spr.travel.reservation.ReservationVO;
 import com.spr.travel.service.ProductFileService;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Controller
-@RequestMapping("/products")
+@RequestMapping("/products/*")
 @RequiredArgsConstructor
 public class ProductController {
 
@@ -42,13 +43,14 @@ public class ProductController {
         model.addAttribute("continent", "모든 상품 정보");
         listSplitAndAdd(model, list);
 
-        return "/products/index";
+        return "products/index";
     }
 
     @GetMapping("/new")
     public String renderNewForm() {
         return "products/new";
     }
+
     @SuppressWarnings("unchecked")
     @PostMapping({"/", ""})
     public String createProduct(ProductDetail dto, String departure, String arrive, MultipartFile titleImage, RedirectAttributes rttr, HttpSession session) throws Exception {
@@ -101,10 +103,10 @@ public class ProductController {
         return "/products/detail";
     }
 
-    @PostMapping("/{id}")
-    public String reservation(HttpSession session, @PathVariable int id, ReservationVO rvo, RedirectAttributes rttr) {
+   /* @PostMapping("/{id}")
+    public String reservation(HttpSession session, @PathVariable int id, Reservation rvo, RedirectAttributes rttr) {
         User loginUser = (User) session.getAttribute("userInfo");
-        if (loginUser != null && !loginUser.getUserId().equals(rvo.getUser_id())) {
+        if (loginUser != null && !loginUser.getUserId().equals(rvo.getUserId())) {
             rttr.addFlashAttribute("flashMessage", "비정상적인 접근입니다.");
             return "redirect:/";
         }
@@ -115,16 +117,16 @@ public class ProductController {
             if (loginUser != null) {
                 return "redirect:/member/myPage";
             } else {
-                rttr.addFlashAttribute("rev_name", rvo.getRev_name());
+                rttr.addFlashAttribute("revName;", rvo.getRevName());
                 rttr.addFlashAttribute("rev_email", rvo.getRev_email());
-                rttr.addFlashAttribute("rev_phone", rvo.getRev_phone());
+                rttr.addFlashAttribute("rev_phone", rvo.getRevPhone());
                 return "redirect:/member/rev_check";
             }
         } else {
             rttr.addFlashAttribute("flashMessage", "예약 중 오류가 발생하였습니다.");
             return "redirect:/products/reserve";
         }
-    }
+    }*/
 
 
     private void listSplitAndAdd(Model model, List<Product> list) {

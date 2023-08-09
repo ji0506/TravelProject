@@ -2,6 +2,7 @@ package com.spr.travel.service;
 
 import com.spr.travel.domain.Product;
 import com.spr.travel.domain.ProductDetail;
+import com.spr.travel.domain.Reservation;
 import com.spr.travel.reservation.ReservationVO;
 
 
@@ -26,7 +27,7 @@ public interface ProductRestService {
 
     int createProduct(ProductDetail dto, String departure, String arrive) throws ParseException;
 
-    int reserve(ReservationVO rvo);
+    int reserve(Reservation rvo);
 
     int updateProduct(int id, ProductDetail dto, String departure, String arrive) throws ParseException;
 

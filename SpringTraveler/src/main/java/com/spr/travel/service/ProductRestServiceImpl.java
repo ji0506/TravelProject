@@ -3,6 +3,7 @@ package com.spr.travel.service;
 import com.spr.travel.dao.ProductDAO;
 import com.spr.travel.domain.Product;
 import com.spr.travel.domain.ProductDetail;
+import com.spr.travel.domain.Reservation;
 import com.spr.travel.reservation.ReservationVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class ProductRestServiceImpl implements ProductRestService{
     }
 
     @Override
-    public int reserve(ReservationVO rvo) {
+    public int reserve(Reservation rvo) {
         return 0;
     }
 
