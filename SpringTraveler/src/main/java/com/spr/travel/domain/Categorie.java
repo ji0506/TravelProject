@@ -1,5 +1,6 @@
 package com.spr.travel.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,11 +20,13 @@ public class Categorie {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int CateNo;
-
-
+	
+	@Column(length=20)
 	private String CateName;
 
-	private String userTypeCd;
-
+	@Column(length=20)
 	private String CateDetail;
+	
+	@Column(length=2)
+	private String userTypeCd;
 }

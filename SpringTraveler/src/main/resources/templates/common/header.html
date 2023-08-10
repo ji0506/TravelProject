@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<nav id="mainNavbar" class="navbar fixed-top navbar-expand-lg">
 		<div class="container">
-			<a class="navbar-brand"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-airplane-fill" viewBox="0 0 16 16">
+			<a class="navbar-brand" href="/main/main.do"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-airplane-fill" viewBox="0 0 16 16">
 					<path d="M6.428 1.151C6.708.591 7.213 0 8 0s1.292.592 1.572 1.151C9.861 1.73 10 2.431 10 3v3.691l5.17 2.585a1.5 1.5 0 0 1 .83 1.342V12a.5.5 0 0 1-.582.493l-5.507-.918-.375 2.253 1.318 1.318A.5.5 0 0 1 10.5 16h-5a.5.5 0 0 1-.354-.854l1.319-1.318-.376-2.253-5.507.918A.5.5 0 0 1 0 12v-1.382a1.5 1.5 0 0 1 .83-1.342L6 6.691V3c0-.568.14-1.271.428-1.849Z" />
 				</svg>
 				대탈출
@@ -13,31 +13,31 @@
 
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/products/continent/아시아}">아시아</a></li>
-					<li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/products/continent/유럽}">유럽</a></li>
-					<li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/products/continent/아메리카}">아메리카</a></li>
-					<li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/products/continent/오세아니아}">오세아니아</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="/products/continent/아시아">아시아</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="/products/continent/유럽">유럽</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="/products/continent/아메리카">아메리카</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="/products/continent/오세아니아">오세아니아</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-					<li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}">
-						<form action="${contextPath}/member/logOut" method="POST">
+					<li class="nav-item" sec:authorize="isAuthenticated()" >
+						<form action="/member/logout.do" method="POST">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							<button class="border-0 bg-transparent nav-link active" aria-current="page">로그아웃</button>
 						</form>
 					</li>
-					<li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}">
-						<a class="nav-link active" aria-current="page" th:href="@{${contextPath}/member/adminPage}">관리자페이지</a>
+					<li sec:authorize="hasRole('ROLE_ADMIN')"  class="nav-item">
+						<a class="nav-link active" aria-current="page" href="/member/adminPage">관리자페이지</a>
 					</li>
-					<li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}">
-						<a class="nav-link active" aria-current="page" th:href="@{${contextPath}/member/myPage}">마이페이지</a>
+					<li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
+						<a class="nav-link active" aria-current="page" href="/member/myPage">마이페이지</a>
 					</li>
-					<li class="nav-item" th:if="${#authorization.expression('isAnonymous()')}">
-						<a class="nav-link active" aria-current="page" th:href="@{/member/main.do}">로그인</a>
+					<li sec:authorize="anonymous" class="nav-item">
+						<a class="nav-link active" aria-current="page" href="/member/main.do">로그인</a>
 					</li>
-					<li class="nav-item" th:if="${#authorization.expression('isAnonymous()')}">
-						<a class="nav-link active" aria-current="page" th:href="@{${contextPath}/member/rev_check}">예약확인</a>
+					<li sec:authorize="anonymous" class="nav-item">
+						<a class="nav-link active" aria-current="page" href="/member/rev_check">예약확인</a>
 					</li>
-					<li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{${contextPath}/board/faq}">고객센터</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="/board/faq">고객센터</a></li>
 				</ul>
 			</div>
 		</div>

@@ -30,7 +30,7 @@
       <h4 class="alert-heading m-0">일치하는 상품 정보가 존재하지 않습니다.</h4>
     </div>
     <sec:authorize access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')">
-      <a id="newBtn" href="${/products/new}" class="btn btn-primary">상품 등록</a>
+      <a id="newBtn" th:href="@{/products/new}" class="btn btn-primary">상품 등록</a>
     </sec:authorize>
   </section>
 </th:block>
@@ -41,7 +41,6 @@
         <!--					<h3 class="mb-3">${list[0].product_continent}</h3>-->
         <div>
           <h3 class="mb-3 d-inline-block">[[${continent}]]</h3>
-
         </div>
         <th:block th:each="country, stat : ${countrySet}">
           <div class="card mb-4">
@@ -55,8 +54,8 @@
                     <p class="card-title" th:text="${product.proCity} ">[[${product.proName}]] </p>
                     <p class="card-text">
                       [[${product.proAirplane}]]
-                      <span th:text="${#dates.format(product.proDeparture, 'yyyy-MM-dd')}"></span> ~
-                      <span th:text="${#dates.format(product.proArrive, 'yyyy-MM-dd')}"></span>
+                      <fmt:formatDate value="${product.product_departure}" pattern="yyyy-MM-dd" /> ~
+                      <fmt:formatDate value="${product.product_arrive}" pattern="yyyy-MM-dd" />
                     </p>
                   </div>
                     <div class="col-sm-2 col-md-3 col-lg-4 col-xl-5 text-center text-sm-end">

@@ -21,8 +21,10 @@ public class Board implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(length=11)
 	private int brdNo;
 
+	@Column(length=200)
 	private String title;
 
 	@Lob
@@ -33,12 +35,29 @@ public class Board implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date regDate;
 
-	private int kateNo;
+	@Column(length=2)
+	private int cateNo;
 	
+	@Column(length=2)
 	private int voteNo;
 
+	@Column(length=10)
 	private int cnt;
-	
+
+	@Column(length=11)	
 	private String userId;
+
+	
+	public Board() {
+	
+	}
+
+	public Board(String title, String content, int cateNo) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.cateNo = cateNo;
+	}
+
 
 }

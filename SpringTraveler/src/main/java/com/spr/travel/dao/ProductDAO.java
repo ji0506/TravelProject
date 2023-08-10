@@ -28,7 +28,7 @@ public interface ProductDAO {
     @SelectProvider(type = ProductProvider.class, method = "getListBySearch")
     List<Product> getListBySearch(Map<String, String> map);
 
-    @Insert("INSERT INTO product VALUES (NULL, #{proContinent}, #{proCountry;}, #{proCity}, #{pro_name}, #{proAirplane}, #{proDeparture}, #{proArrive}, (Date(#{proArrive}) - Date(#{proDeparture})), #{proAdult}, #{proMinor}, #{proSeat})")
+    @Insert("INSERT INTO product VALUES (NULL, #{proContinent}, #{proCountry}, #{proCity}, #{pro_name}, #{proAirplane}, #{proDeparture}, #{proArrive}, (Date(#{proArrive}) - Date(#{proDeparture})), #{proAdult}, #{proMinor}, #{proSeat})")
     int createProduct(ProductDetail vo);
 
     @Insert("INSERT INTO product_detail VALUES (NULL, LAST_INSERT_ID(), #{detail_info}, #{detail_schedule}, #{detail_title_image}, 0)")

@@ -1,48 +1,55 @@
 package com.spr.travel.domain;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import lombok.Data;
-
+@NoArgsConstructor
 @Entity
 @Data
+@Table(name ="user")
 public class User {
 
 	@Id
-	private String userId;
+	@Column(length=11)
+	private String userId; //아이디
 
-	private String userPwd;
+	@Column(length=100)
+	private String userPwd; //비밀번호
 
-	private String userName;
-	
-	private String userEmail;
+	@Column(length=10)
+	private String userName; //이름
 
-	private String userCp;
+	@Column(length=100)
+	private String userGender; //성별
 
-	private String userAddr;
+	@Column(length=15)
+	private String userBirth; //생년월일
 
-	private String userDaddr;
-	
+	@Column(length=20)
+	private String userEmail; //이메일
+
+	@Column(length=20)
+	private String userCp; //핸드폰번호
+
+	@Column(length=50)
+	private String userAddr; //주소
+
+	@Column(length=50)
+	private String userDaddr; //상세주소
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date regDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateDate;
-	
+
 	private String userGrade;
-	
+
 	private String userTypeCd;
-
-	public User orElseThrow(Object object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
-	
+	private String authId;
 }
+

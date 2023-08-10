@@ -1,8 +1,6 @@
 package com.spr.travel.security;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,21 +12,19 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import com.spr.travel.domain.User;
 
-import lombok.extern.log4j.Log4j;
-
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
-
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication auth) throws IOException, ServletException {
-        User user = (User) auth.getPrincipal();
-        HttpSession session = request.getSession();
-
-        if(user != null) {
-            session.setAttribute("user", user);
-        }
-        response.sendRedirect("/main/main.do");
-
-    }
+	
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication auth) throws IOException, ServletException {
+		User user = (User) auth.getPrincipal();
+		HttpSession session = request.getSession();
+		
+		if(user != null) {
+			session.setAttribute("user", user);
+		}
+		response.sendRedirect("/main/main.do");
+		
+	}
 
 }

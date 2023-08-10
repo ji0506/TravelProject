@@ -2,6 +2,7 @@ package com.spr.travel.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,16 +20,22 @@ public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(length=11)
 	private int proNo;
 	
+	@Column(length=20)
 	private String proContinent;
-	
+
+	@Column(length=20)
 	private String proCountry;
-	
+
+	@Column(length=20)
 	private String proCity;
 
+	@Column(length=50)
 	private String proName;
 
+	@Column(length=10)
 	private String proAirplane;
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -37,107 +44,15 @@ public class Product {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date proArrive;
 	
+	@Column(length=4)
 	private int proPlan;
 	
+	@Column(length=4)
 	private int proAdult;
 
+	@Column(length=4)
 	private int proMinor;
 	
+	@Column(length=4)
 	private int proSeat;
-
-	public int getProNo() {
-		return proNo;
-	}
-
-	public void setProNo(int proNo) {
-		this.proNo = proNo;
-	}
-
-	public String getProContinent() {
-		return proContinent;
-	}
-
-	public void setProContinent(String proContinent) {
-		this.proContinent = proContinent;
-	}
-
-	public String getProCountry() {
-		return proCountry;
-	}
-
-	public void setProCountry(String proCountry) {
-		this.proCountry = proCountry;
-	}
-
-	public String getProCity() {
-		return proCity;
-	}
-
-	public void setProCity(String proCity) {
-		this.proCity = proCity;
-	}
-
-	public String getProName() {
-		return proName;
-	}
-
-	public void setProName(String proName) {
-		this.proName = proName;
-	}
-
-	public String getProAirplane() {
-		return proAirplane;
-	}
-
-	public void setProAirplane(String proAirplane) {
-		this.proAirplane = proAirplane;
-	}
-
-	public Date getProDeparture() {
-		return proDeparture;
-	}
-
-	public void setProDeparture(Date proDeparture) {
-		this.proDeparture = proDeparture;
-	}
-
-	public Date getProArrive() {
-		return proArrive;
-	}
-
-	public void setProArrive(Date proArrive) {
-		this.proArrive = proArrive;
-	}
-
-	public int getProPlan() {
-		return proPlan;
-	}
-
-	public void setProPlan(int proPlan) {
-		this.proPlan = proPlan;
-	}
-
-	public int getProAdult() {
-		return proAdult;
-	}
-
-	public void setProAdult(int proAdult) {
-		this.proAdult = proAdult;
-	}
-
-	public int getProMinor() {
-		return proMinor;
-	}
-
-	public void setProMinor(int proMinor) {
-		this.proMinor = proMinor;
-	}
-
-	public int getProSeat() {
-		return proSeat;
-	}
-
-	public void setProSeat(int proSeat) {
-		this.proSeat = proSeat;
-	}
 }

@@ -1,5 +1,6 @@
 package com.spr.travel.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,63 +16,21 @@ public class ProductDetail {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(length=11)
 	private int detailNo;
 
+	@Column(length=11)
 	private int proNo;
 
+	@Column(length=100)
 	private String detailInfo;
-	
+
+	@Column(length=255)
 	private String detailImage;
-
-	private String schedule;
 	
-	private String detailViewcnt;
+	@Column(length=4)
+	private int detailViewcnt;
 
-	public int getDetailNo() {
-		return detailNo;
-	}
-
-	public void setDetailNo(int detailNo) {
-		this.detailNo = detailNo;
-	}
-
-	public int getProNo() {
-		return proNo;
-	}
-
-	public void setProNo(int proNo) {
-		this.proNo = proNo;
-	}
-
-	public String getDetailInfo() {
-		return detailInfo;
-	}
-
-	public void setDetailInfo(String detailInfo) {
-		this.detailInfo = detailInfo;
-	}
-
-	public String getDetailImage() {
-		return detailImage;
-	}
-
-	public void setDetailImage(String detailImage) {
-		this.detailImage = detailImage;
-	}
-
-	public String getSchedule() {
-		return schedule;
-	}
-
-	public void setSchedule(String schedule) {
-		this.schedule = schedule;
-	}
-
-	public String getDetailViewcnt() {
-		return detailViewcnt;
-	}
-
-	public void setDetailViewcnt(String detailViewcnt) {
-		this.detailViewcnt = detailViewcnt;
-	}
+	@Column
+	private String schedule;
 }
