@@ -14,4 +14,7 @@ public interface BoardRepository extends JpaRepository<Board, Integer>{
             "select a.* from board a where kate_no = 1  ORDER BY reg_date desc LIMIT 2) t1 union select t2.* from ( " +
             "select b.* from board b where kate_no != 1  ORDER BY reg_date desc LIMIT 3) t2 ")
 	public List<Board> findMainView();
+
+    public List<Board> findByCateNo(int cateNo);
+
 }
