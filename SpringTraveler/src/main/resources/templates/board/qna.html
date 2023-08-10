@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+	<title>최고의 여행 - 대탈출</title>
+	<link rel="stylesheet" th:href="@{/bootstrap-5.2.0-dist/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/btn-primary.css}">
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<script src="/js/jquery.js"/>"></script>
+</head>
+
+<body class="d-flex flex-column vh-100">
+	<div th:insert="~{/common/header}"></div>
+
+	<!--<c:if test="${!empty flashMessage}">
+		<div class="container">
+			<div class="row">
+				<div class="col-6 offset-3">
+					<div class="alert alert-primary alert-dismissible fade show" role="alert">
+						${flashMessage}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>-->
+
+
+	<section class="container">
+		<div class="row">
+			<div class="col-md-2">
+				<div class="card mb-3">
+					<div class="card-header">고객센터</div>
+					<div class="list-group list-group-flush">
+						<a href="/board/faq.do" class="list-group-item" id="faqBoard">자주 묻는 질문</a>
+						<a href="/board/qna.do" class="list-group-item active" id="qnaBoard">질문과 답변</a>
+						<a href="/board/notice.do" class="list-group-item" id="noticeBoard">공지사항</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10 mb-5">
+				<h2 class="mb-4">질문과 답변</h2>
+				<div class="mb-4">
+					<div class="dropdown">
+						<a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							보기 </a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="/board/qna.do">전체</a></li>
+							<li><a class="dropdown-item" href="/board/qna.do/checking">확인중</a></li>
+							<li><a class="dropdown-item" href="/board/qna.do/checked">답변 완료</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+						<tr class="table-warning">
+							<th class="col-sm-2">구분</th>
+							<th class="col-sm-6">제목</th>
+							<th class="col-sm-2">글쓴이</th>
+							<th class="col-sm-2">등록일</th>
+						</tr>
+						</thead>
+						<tbody class="table table-info">
+
+							<th:block th:if="${qnaNoticeList != null }">
+								<th:block th:each="item, n : ${qnaNoticeList}">
+									<tr>
+										<td class="col-sm-2">${n.notice_category}</td>
+										<td class="col-sm-6">
+											<a href="/board/noticeDetail?notice_num=${n.notice_num}">${n.notice_title}</a></td>
+										<td class="col-sm-2">${n.notice_writer}</td>
+										<td class="col-sm-2"><f:formatDate value="${n.notice_regdate}" pattern="yyyy.MM.dd" /></td>
+									</tr>
+								</th:block>
+							</th:block>
+							<th:block th:if="${qnaNoticeList == null }">
+								<tr>
+									<td colspan="4"><h1>현재 게시글이 존재하지 않습니다.</h1></td>
+								</tr>
+							</th:block>
+						</tbody>
+						<tbody class="table table-striped">
+							<th:block th:if="${qnaList != null}">
+								<th:block th:each="q, n : ${qnaList}">
+									<tr>
+											<th:block th:if="${q.qna_answer == null}">
+												<td id="1" class="col-sm-1">확인중</td>
+											</th:block>
+											<th:block th:if="${q.qna_answer != null}">
+												<td id="2" class="col-sm-1">답변완료</td>
+											</th:block>
+
+											<th:block th:if="${q.qna_writer == userInfo.member_name or userInfo.member_master eq 'Y' }">
+												<td id="qnaTitle" class="col-sm-6"><a href="/board/qnaDetail?qna_num=${q.qna_num}">${q.qna_title}</a></td>
+											</th:block>
+											<th:block th:if="${q.qna_writer == userInfo.member_name or userInfo.member_master eq 'Y' }">
+												<td class="col-sm-6">작성자 외에는 확인할수 없습니다.</td>
+											</th:block>
+										<td id="qnaWriter" class="col-sm-2">[[${q.qna_writer}]][[${fn:length(writer)}]]
+										</td>
+										</td>
+										<td class="col-sm-2">[[{q.qna_regdate}]]</td>
+									</tr>
+								</th:block>
+							</th:block>
+							<th:block th:if="${qnaList == null}">
+								<tr>
+									<td colspan="4"><h1>현재 게시글이 존재하지 않습니다.</h1></td>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+<!--				<th:block th:if="${pm != null}">
+					<nav aria-label="Page navigation mb-3">
+						<ul class="pagination justify-content-center">
+							<th:block th:if="${pm.first}">
+								<li class="page-item">
+									<a class="page-link" href="${pm.makeQuery(1)}">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+							</th:block>
+							<th:block th:if="${pm.prev}">
+								<li class="page-item">
+									<a class="page-link" href="${pm.makeQuery(pm.startPage-1)}">&lt;</a>
+								</li>
+							</th:block>
+							<th:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
+								<li class="page-item" aria-current="page" ${pm.cri.page ==i? 'class="active"':''}>
+								<a id="pageNum" class="page-link" href="${pm.makeQuery(i)}">${i}</a>
+								</li>
+							</th:forEach>
+							<th:block th:if="${pm.next}">
+								<li class="page-item">
+									<a class="page-link" href="${pm.makeQuery(pm.endPage+1)}">&gt;</a>
+								</li>
+							</th:block>
+							<th:block th:if="${pm.last}">
+								<li class="page-item">
+									<a class="page-link" href="${pm.makeQuery(pm.maxPage)}">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>
+							</th:block>
+						</ul>
+					</nav>
+				</th:block>-->
+				<div class="mb-4 text-end">
+					<button type="button" class="btn btn-outline-secondary" id="addBtn">글쓰기</button>
+					<button type="button" class="btn btn-outline-secondary" id="myQNA">나의 질문</button>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script src="/resources/js/popper.min.js"></script>
+	<script>
+	$("#addBtn").click(function(){
+
+		location.href="qnaWrite.do";
+	});
+
+	$("#myQNA").click(function(){
+
+		location.href="/board/myQNA";
+	});
+</script>
+	<div th:insert="~{/common/footer}"></div>
+
+</body>
+</html>
