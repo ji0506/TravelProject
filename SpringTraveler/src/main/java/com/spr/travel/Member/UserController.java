@@ -3,6 +3,7 @@ package com.spr.travel.Member;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mysql.cj.Session;
+import com.spr.travel.domain.Product;
+import com.spr.travel.domain.Reservation;
 import com.spr.travel.domain.User;
+import com.spr.travel.service.ProductService;
+import com.spr.travel.service.ReserService;
 
 @Controller
 @RequestMapping("/member/*")
@@ -28,6 +33,13 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ReserService reserService;
+
+	@Autowired
+	private ProductService productService;
+
 	
 	
 	@RequestMapping("/main.do")
@@ -42,13 +54,14 @@ public class UserController {
 	@GetMapping("/myPage")
 	@Transactional
 	public String myPage(User user,HttpServletRequest request,HttpSession session,Model model) throws Exception{
+		session = request.getSession();
 		user = (User) session.getAttribute("user");
 			
-//		List<Reservation> rev = userService.checkRev(user);
-//		List<Product> pList = userService.findProductList(rev);
+		List<Reservation> rev = reserService.getReserList(user);
+//		List<Product> pList = productService.findProductList(rev);
 			
 			
-		//model.addAttribute("product", pList);
+		model.addAttribute("c", rev);
 			
 		
 		return "member/info";
@@ -108,6 +121,12 @@ public class UserController {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	// (회원) 정보수정 페이지이동
+	@GetMapping("/edit_check")
+	public String changeInfo() {
+		return "member/editcheck";
 	}
 
 

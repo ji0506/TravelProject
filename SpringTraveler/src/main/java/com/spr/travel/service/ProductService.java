@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spr.travel.domain.Product;
+import com.spr.travel.domain.Reservation;
 import com.spr.travel.repository.ProductRepository;
 
 @Service
@@ -18,4 +19,9 @@ public class ProductService {
 		return productRepository.findAll();
 	}
 
+	public List<Product> findProductList(Reservation res){
+		return productRepository.findByProNo(res.getProNo());
+	}
+
+	
 }

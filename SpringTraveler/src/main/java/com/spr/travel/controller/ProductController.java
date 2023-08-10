@@ -34,7 +34,6 @@ public class ProductController {
 
     @GetMapping("/main")
     public String main(Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
-
         List<Product> list = productService.getProductList();
 
         model.addAttribute("continent", "모든 상품 정보");

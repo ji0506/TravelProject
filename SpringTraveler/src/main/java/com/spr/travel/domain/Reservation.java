@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -36,5 +40,10 @@ public class Reservation {
 	@Column(length=11)
 	private int revMinor;
 
+	@OneToOne
+	@JoinColumn(name = "proNo", insertable = false, updatable = false)
+	@JsonIgnore
+	private Product product;
 
+	
 }
