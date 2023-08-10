@@ -6,8 +6,6 @@ import com.spr.travel.domain.Qna;
 
 
 public interface DetailRepository extends JpaRepository<Qna, Integer>{
-	
-	
-	
+
 	
 }

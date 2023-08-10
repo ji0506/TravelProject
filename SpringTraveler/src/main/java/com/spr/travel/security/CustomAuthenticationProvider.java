@@ -7,8 +7,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,23 +15,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.spr.travel.auth.PrincipalDetail;
+import com.spr.travel.Member.UserService;
 import com.spr.travel.domain.User;
-import com.spr.travel.service.UserService;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 	@Autowired
 	private UserService service;
-	
-	@Autowired
-	private UserDetailsService userDetailsService;
-	
+		
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String userID = (String) authentication.getPrincipal();
@@ -73,7 +66,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	}
 	
 	
-	
+
 	public static String sha256Hash(String input) {
 	    try {
 	        MessageDigest digest = MessageDigest.getInstance("SHA-256");

@@ -6,8 +6,7 @@ import com.spr.travel.domain.Product;
 
 
 public interface ProductRepository extends JpaRepository<Product, Integer>{
-	
-	
-	
-	
+
+
+
 }

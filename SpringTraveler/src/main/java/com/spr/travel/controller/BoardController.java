@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spr.travel.domain.Board;
-import com.spr.travel.domain.Product;
 import com.spr.travel.service.BoardService;
 
 @Controller
