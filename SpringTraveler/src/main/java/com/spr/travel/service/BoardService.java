@@ -18,7 +18,14 @@ public class BoardService {
 	public List<Board> getBoardList(){
 		return BoardRepository.findAll();
 	}
+	
 	public void Write(Board qvo) throws Exception {
 		BoardRepository.save(qvo);
 	}
+
+	
+	public List<Board> getBoardCateList(int cateNo){
+		return BoardRepository.findByCateNo(cateNo);
+	}
+
 }

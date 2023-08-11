@@ -22,6 +22,4 @@ public class ProductService {
 	public List<Product> findProductList(Reservation res){
 		return productRepository.findByProNo(res.getProNo());
 	}
-
-	
 }

@@ -20,11 +20,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.mysql.cj.Session;
-import com.spr.travel.domain.Product;
 import com.spr.travel.domain.Reservation;
 import com.spr.travel.domain.User;
-import com.spr.travel.service.ProductService;
 import com.spr.travel.service.ReserService;
 
 @Controller
@@ -37,14 +34,14 @@ public class UserController {
 	@Autowired
 	private ReserService reserService;
 
-	@Autowired
-	private ProductService productService;
+//	@Autowired
+//	private ProductService productService;
 
 	
 	
 	@RequestMapping("/main.do")
 	public String list() {	
-		return "member/login";
+		return "member/login2";
 	}
 	
 

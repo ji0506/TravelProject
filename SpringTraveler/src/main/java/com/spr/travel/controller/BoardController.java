@@ -5,8 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.spr.travel.domain.Qna;
-import com.spr.travel.service.QnaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spr.travel.domain.Board;
+import com.spr.travel.domain.Qna;
 import com.spr.travel.service.BoardService;
+import com.spr.travel.service.QnaService;
 
 @Controller
 @RequestMapping("/board/*")
@@ -28,9 +28,6 @@ public class BoardController {
 	@Autowired
 	private QnaService qs;
 
-
-
-
 	@GetMapping("/faq.do")
 	public String main(Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
 			
@@ -40,11 +37,13 @@ public class BoardController {
 		
 		return "board/faq";
 	}
+	
 	@GetMapping("/faqWrite.do")
 	public String main2(Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
 		
 		return "board/faqWrite";
 	}
+	
 	@PostMapping("/faqWrite.do")
 	public String main3( @RequestParam("faq_category")int cateNo, 
 			@RequestParam("faq_title")String title, @RequestParam("faq_content")String content) throws Exception {
