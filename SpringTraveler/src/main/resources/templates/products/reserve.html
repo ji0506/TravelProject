@@ -41,13 +41,13 @@
                             <div class="col">
                                 <span class="fs-6 badge text-bg-danger me-2 p-2">성인요금</span>
                                 <span class="card-text d-inline-block">
-									<fmt:formatNumber type="number" maxFractionDigits="3" value="${product.proAdult}" />원
+									<fmt:formatNumber type="number" maxFractionDigits="3" value="${product.proAdult}" />[[${product.proAdult}]]원
 								</span>
                             </div>
                             <div class="col">
                                 <span class="fs-6 badge text-bg-danger me-2 p-2">소인요금</span>
                                 <span class="card-text d-inline-block">
-									<fmt:formatNumber type="number" maxFractionDigits="3" value="${product.proMinor}" />원
+									<fmt:formatNumber type="number" maxFractionDigits="3" value="${product.proMinor}" />[[${product.proMinor}]]원
 								</span>
                             </div>
                         </div>
@@ -55,13 +55,13 @@
                             <div class="col">
                                 <span class="fs-6 badge text-bg-danger me-2 p-2">출발일정</span>
                                 <span class="card-text d-inline-block">
-									<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${product.proDeparture}" />
+									[[${#dates.format(product.proDeparture, 'yyyy-MM-dd HH:mm:ss')}]]
 								</span>
                             </div>
                             <div class="col">
                                 <span class="fs-6 badge text-bg-danger me-2 p-2">도착일정</span>
                                 <span class="card-text d-inline-block">
-									<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${product.proArrive}" />
+									[[${#dates.format(product.proArrive, 'yyyy-MM-dd HH:mm:ss')}]]
 								</span>
                             </div>
                         </div>
@@ -143,8 +143,7 @@
                                 제3자에게 제공하고 있습니다.
                             </p>
                             <ul class="list_indent2 mgt10">
-                                <li class="tt">1. <>
-                                </li>
+                                <li class="tt">1.</li>
                                 <li>개인정보를 제공받는 자 :</li>
                                 <li>제공받는 자의 개인정보 이용목적 :</li>
                                 <li>제공받는 자의 보유.이용기간:</li>
@@ -156,7 +155,7 @@
                             </em>은(는) 원활한 개인정보 업무처리를 위하여 다음과 같이 개인정보 처리업무를 위탁하고 있습니다.
                             </p>
                             <ul class='list_indent2 mgt10'>
-                                <li class='tt'>1. <>
+                                <li class='tt'>1.&lt;&gt;
                                 </li>
                                 <li>위탁받는 자 (수탁자) :</li>
                                 <li>위탁하는 업무의 내용 :</li>
@@ -447,21 +446,21 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="inputName">이름</label>
-                            <input required="required" type="String" class="form-control" id="inputName" value="${userInfo.userName;}" name="revName;">
+                            <input required="required" type="text" class="form-control" id="inputName" value="${userInfo.userName}" name="revName;">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="inputBirth">생년월일</label>
-                            <input required="required" type="String" class="form-control" id="inputBirth" value="${userInfo.member_birth}" name="rev_birth">
+                            <input required="required" type="text" class="form-control" id="inputBirth" value="${userInfo.userBirth}" name="rev_birth">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="inputPhone">핸드폰</label>
-                            <input required="required" type="String" class="form-control" id="inputPhone" value="${userInfo.userCp;}" name="revPhone;">
+                            <input required="required" type="text" class="form-control" id="inputPhone" value="${userInfo.userCp}" name="revPhone;">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="inputEmail">이메일</label>
-                            <input required="required" type="String" class="form-control" id="inputEmail" value="${userInfo.userEmail;}" name="rev_email">
+                            <input required="required" type="text" class="form-control" id="inputEmail" value="${userInfo.userEmail}" name="rev_email">
                         </div>
-                        <input type="hidden" id="inputMemberId" name="member_id" value="${userInfo.userId;}">
+                        <input type="hidden" id="inputMemberId" name="userId" value="${userInfo.userId}">
                         <div class="text-center">
                             <button id="reserveBtn" class="btn btn-primary">예약확정</button>
                             <button class="btn btn-danger">취소</button>
@@ -474,4 +473,22 @@
 </section>
 <div th:insert="~{/common/footer}"></div>
 </body>
+<script src="/js/jquery.js"/>
+	$("#reserveBtn").click(function (e) {
+		e.preventDefault();
+		if (!$("#flexCheckDefault").is(":checked")) {
+			alert("이용약관에 동의해주세요.");
+			return;
+		}
+		if ($("#inputAdult").val() + $("#inputMinor").val() < 1) {
+			alert("인원수를 선택해주세요.");
+			return;
+		}
+		let adult = $("#inputAdult").val();
+		let minor = $("#inputMinor").val();
+		if (!adult) $("#inputAdult").val("0");
+		if (!minor) $("#inputMinor").val("0");
+		$("#reserveForm").submit();
+	});
+</script>
 </html>

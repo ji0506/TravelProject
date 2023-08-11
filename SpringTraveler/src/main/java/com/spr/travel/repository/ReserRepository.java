@@ -8,10 +8,11 @@ import com.spr.travel.domain.Reservation;
 
 
 public interface ReserRepository extends JpaRepository<Reservation, Integer>{
+
+    public Reservation findByProNo(int userID);
 	
 	public List<Reservation> findByUserId(String userId);
 
 	public Reservation findByProNo(int proNo); 
-	
 	
 }
