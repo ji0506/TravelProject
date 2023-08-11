@@ -30,4 +30,10 @@ public class ProductDetail {
 	
 	@Column(length=4)
 	private int detailViewcnt;
+<<<<<<< HEAD
+=======
+
+	@Column
+	private String schedule;
+>>>>>>> 박태선
 }

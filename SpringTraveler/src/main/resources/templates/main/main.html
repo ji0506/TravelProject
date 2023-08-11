@@ -119,17 +119,21 @@
 				<div class="col-md-6 col-xl-3">
 					<div class="card border-0 mx-auto" style="width: 18rem;">
 						<th:block th:if="${1 == katTargetNo}" class="active">
-							<img src="${contextPath}/attach${item.detail_title_image}" class="card-img-top" alt="...">
+							<img th:src="${contextPath}/attach${item.detail_title_image}" class="card-img-top" alt="...">
 						</th:block>
 						<th:block th:unless="${1 == katTargetNo}">
 							<img src="https://source.unsplash.com/random" class="card-img-top" alt="...">
 						</th:block>
-	
+
 						<div class="card-body tiny-index">
-							<h5 class="card-title">[[${item.proName}]]</h5>
+							<h5 class="card-title" th:text="${item.proName}"></h5>
 						</div>
 						<div class="card-body">
+<<<<<<< HEAD
 							<a href="/products/${item.proNo}" class="btn btn-outline-secondary">바로가기</a>
+=======
+							<a th:href="@{/products/__${item.proNo}__}" class="btn btn-outline-secondary">바로가기</a>
+>>>>>>> 박태선
 						</div>
 					</div>
 				</div>

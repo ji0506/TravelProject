@@ -3,7 +3,10 @@ package com.spr.travel.Member;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+<<<<<<< HEAD
 import java.util.List;
+=======
+>>>>>>> 박태선
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,9 +23,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+<<<<<<< HEAD
 import com.spr.travel.domain.Reservation;
 import com.spr.travel.domain.User;
 import com.spr.travel.service.ReserService;
+=======
+import com.spr.travel.domain.User;
+>>>>>>> 박태선
 
 @Controller
 @RequestMapping("/member/*")
@@ -31,6 +38,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+<<<<<<< HEAD
 	@Autowired
 	private ReserService reserService;
 
@@ -42,6 +50,12 @@ public class UserController {
 	@RequestMapping("/main.do")
 	public String list() {	
 		return "member/login2";
+=======
+	
+	@RequestMapping("/main.do")
+	public String list() {	
+		return "member/login";
+>>>>>>> 박태선
 	}
 	
 
@@ -51,6 +65,7 @@ public class UserController {
 	@GetMapping("/myPage")
 	@Transactional
 	public String myPage(User user,HttpServletRequest request,HttpSession session,Model model) throws Exception{
+<<<<<<< HEAD
 		session = request.getSession();
 		user = (User) session.getAttribute("user");
 			
@@ -59,6 +74,15 @@ public class UserController {
 			
 			
 		model.addAttribute("c", rev);
+=======
+		user = (User) session.getAttribute("user");
+			
+//		List<Reservation> rev = userService.checkRev(user);
+//		List<Product> pList = userService.findProductList(rev);
+			
+			
+		//model.addAttribute("product", pList);
+>>>>>>> 박태선
 			
 		
 		return "member/info";
@@ -119,12 +143,15 @@ public class UserController {
 			return null;
 		}
 	}
+<<<<<<< HEAD
 	
 	// (회원) 정보수정 페이지이동
 	@GetMapping("/edit_check")
 	public String changeInfo() {
 		return "member/editcheck";
 	}
+=======
+>>>>>>> 박태선
 
 
 }

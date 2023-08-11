@@ -35,33 +35,33 @@
                 </svg>
             </a>
             <span>&nbsp;&gt;&nbsp;</span>
-            <a th:href="@{products/continent/${product.proContinent}}">[${product.proContinent}]]</a>
+            <a th:href="@{'/products/continent/' + ${product.proContinent}}">[[${product.proContinent}]]</a>
             <span>&nbsp;&gt;&nbsp;</span>
-            <a th:href="@{products/search?country=${product.proCountry}}">[[${product.proCountry}]]</a>
+            <a th:href="@{'search?country=' + ${product.proCountry}}">[[${product.proCountry}]]</a>
             <span>&nbsp;&gt;&nbsp;</span>
-            <a th:href="@{products/search?city=${product.proCity}}">[[${product.proCity}]]</a>
+            <a th:href="@{'search?city=' + ${product.proCity}}">[[${product.proCity}]]</a>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-6">
             <div class="card mb-3">
-                <img src="${contextPath}/attach${product.detail_title_image.replace('s_','')}" class="card-img-top" alt="...">
+                <img th:src="@{/attach${detail.detail_image.replace('s_','')}}" class="card-img-top" alt="...">
             </div>
         </div>
         <div class="col-lg-6">
             <div class="card mb-3">
                 <div class="card-header">
-                    <h2 class="fs-5 card-title m-0 p-1">[[${product.proCountry}/${product.proCity}]] [[${product.proName}]]</h2>
+                    <h2 class="fs-5 card-title m-0 p-1">[[${product.proCountry}]]/[[${product.proCity}]] [[${product.proName}]]</h2>
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col">
                             <span class="fs-6 badge text-bg-primary me-2 p-2">항공편</span>
-                            <span class="card-text d-inline-block">${product.product_airplane}</span>
+                            <span class="card-text d-inline-block">[[${product.proAirplane}]]</span>
                         </div>
                         <div class="col">
                             <span class="fs-6 badge text-bg-primary me-2 p-2">잔여좌석</span>
-                            <span class="card-text d-inline-block">${product.proAirplane}</span>
+                            <span class="card-text d-inline-block">[[${product.proSeat}]]</span>
                             <c:if test="${product.product_seat <= 5}">
                                 <span class="ms-2 badge text-bg-danger">마감 임박</span>
                             </c:if>
@@ -71,13 +71,13 @@
                         <div class="col">
                             <span class="fs-6 badge text-bg-primary me-2 p-2">성인요금</span>
                             <span class="card-text d-inline-block">
-								<fmt:formatNumber type="number" maxFractionDigits="3" value="${product.proAdult}" />원
+								<fmt:formatNumber type="number" maxFractionDigits="3" value="${product.proAdult}" />[[${product.proAdult}]]원
 							</span>
                         </div>
                         <div class="col">
                             <span class="fs-6 badge text-bg-primary me-2 p-2">소인요금</span>
                             <span class="card-text d-inline-block">
-								<fmt:formatNumber type="number" maxFractionDigits="3" value="${product.proMinor}" />원
+								<fmt:formatNumber type="number" maxFractionDigits="3" value="${product.proMinor}" />[[${product.proMinor}]]원
 							</span>
                         </div>
                     </div>
@@ -85,13 +85,13 @@
                         <div class="col">
                             <span class="fs-6 badge text-bg-primary me-2 p-2">출발일정</span>
                             <span class="card-text d-inline-block">
-								<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${product.proDeparture}" />
+								[[${#dates.format(product.proDeparture, 'yyyy-MM-dd')}]]
 							</span>
                         </div>
                         <div class="col">
                             <span class="fs-6 badge text-bg-primary me-2 p-2">도착일정</span>
                             <span class="card-text d-inline-block">
-								<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${product.proArrive}" />
+								[[${#dates.format(product.proArrive, 'yyyy-MM-dd')}]]
 							</span>
                         </div>
                     </div>
@@ -100,20 +100,20 @@
             <div class="row mb-3">
                 <div class="col d-flex justify-content-around">
                     <sec:authorize access="anonymous">
-                        <a href="${contextPath}/products/${product.proNo}/reservation" class="btn btn-primary" id="reserveBtn">예약하기</a>
-                        <a href="${contextPath}/board/faq" class="btn btn-primary" id="qnaBtn">문의하기</a>
+                        <a th:href="@{${'/products/' + product.proNo + '/reservation'}}" class="btn btn-primary" id="reserveBtn">예약하기</a>
+                        <a th:href="@{../board/faq.do}" class="btn btn-primary" id="qnaBtn">문의하기</a>
                     </sec:authorize>
-                    <sec:authorize access="hasRole('ROLE_MEMBER')">
-                        <a href="${contextPath}/products/${product.proNo}/reservation" class="btn btn-primary" id="reserveBtn">예약하기</a>
-                        <a href="${contextPath}/board/faq" class="btn btn-primary" id="qnaBtn">문의하기</a>
-                    </sec:authorize>
-                    <sec:authorize access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')">
-                        <a href="${contextPath}/products/${product.proNo}/update" class="btn btn-primary" id="reserveBtn">상품 수정</a>
-                        <a id="deleteBtn" href="${contextPath}/products/${product.proNo}/delete" class="btn btn-primary" id="reserveBtn">상품 삭제</a>
+                 <!--   <sec:authorize access="hasRole('ROLE_MEMBER')">
+                        <a th:href="@{products/${product.proNo}/reservation}" class="btn btn-primary" id="reserveBtn">예약하기</a>
+                        <a th:href="@{board/faq}" class="btn btn-primary" id="qnaBtn">문의하기</a>
+                    </sec:authorize>-->
+                   <!-- <sec:authorize access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')">
+                        <a th:href="@{products/${product.proNo}/update}" class="btn btn-primary" id="reserveBtn">상품 수정</a>
+                        <a id="deleteBtn" th:href="@{products/${product.proNo}/delete}" class="btn btn-primary" id="reserveBtn">상품 삭제</a>
                         <form id="deleteForm" class="d-none">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         </form>
-                    </sec:authorize>
+                    </sec:authorize>-->
                 </div>
             </div>
         </div>
@@ -122,13 +122,13 @@
         <div class="card mb-3">
             <div class="card-body border-bottom tiny-p">
                 <h3 class="card-title m-0 fs-5 mb-3">상품 설명</h3>
-                ${product_detail.detailInfo}
+                [[${detail.detailInfo}]]
             </div>
         </div>
         <div class="card mb-3">
             <div class="card-body tiny-p">
                 <h3 class="card-title m-0 fs-5 mb-3">상세 일정</h3>
-                ${product_detail.detailViewcnt}
+                [[${detail.schedule}]]
             </div>
         </div>
     </div>

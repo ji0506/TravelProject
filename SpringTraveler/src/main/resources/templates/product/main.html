@@ -65,7 +65,11 @@
 											<p class="card-text">잔여좌석: [[${product.proSeat}]]</p>
 											<c:choose>
 												<c:when test="${product.product_seat > 5}">
+<<<<<<< HEAD
 													<button class="btn btn-primary" data-num="${product.product_num}">상세보기</button>
+=======
+													<button class="btn btn-primary" data-num="${product.ProNo}">상세보기</button>
+>>>>>>> 박태선
 												</c:when>
 												<c:otherwise>
 													<c:if test="${product.product_seat > 0}">
@@ -90,19 +94,32 @@
 			</div>
 			<div class="card mb-3 position-fixed translate-middle d-none d-lg-block">
 				<div class="card-header ">
+<<<<<<< HEAD
 					<h3 class="fs-5 card-title text-center m-0">${continent}</h3>
+=======
+					<h3 class="fs-5 card-title text-center m-0">[[${continent}]]</h3>
+>>>>>>> 박태선
 				</div>
 				<c:set var="countryNum" value="1" />
 				<c:forEach var="country" items="${countrySet}">
 					<div class="accordion" id="accordion">
 						<div class="accordion-item">
 							<h4 class="accordion-header" id="heading${countryNum}">
+<<<<<<< HEAD
 								<button class="accordion-button <c:if test="${countryNum ne 1}">collapsed</c:if>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${countryNum}" aria-expanded="true" aria-controls="collapse${countryNum}">
 									${country}
 								</button>
 							</h4>
 
 							<div id="collapse${countryNum}" class="accordion-collapse collapse <c:if test="${countryNum eq 1}">show</c:if>" aria-labelledby="heading${countryNum}">
+=======
+								<button class="accordion-button <c:if test='${countryNum ne 1}'>collapsed</c:if>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${countryNum}" aria-expanded="true" aria-controls="collapse${countryNum}">
+									[[${country}]]
+								</button>
+							</h4>
+
+							<div id="collapse${countryNum}" class="accordion-collapse collapse <c:if test='${countryNum eq 1}'>show</c:if>" aria-labelledby="heading${countryNum}">
+>>>>>>> 박태선
 <!--								<c:forEach var="city" items="${cityMap.get(country)}">
 								<th:block th:each="city, stat : ${list}" th:if="${product.product_country == country}">
 

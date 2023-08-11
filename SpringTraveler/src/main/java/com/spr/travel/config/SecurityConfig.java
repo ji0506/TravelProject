@@ -45,10 +45,15 @@ public class SecurityConfig {
 			try {
 				authorize.antMatchers("/css/**", "/images/**", "/js/**", "/main/*.do", "/member/*", "/member/*.do")
 					.permitAll() // 해당 경로는 인증 없이 접근 가능
+<<<<<<< HEAD
 					.antMatchers("/products/**","/member/**","/products/*.do") // 해당 경로는 인증이 필요
 					.hasRole("USER") // ROLE 이 MEMBER 가 포함된 경우에만 인증 가능
 //					.antMatchers("") // 해당 경로는 인증이 필요
 //					.hasRole("ADMIN") // ROLE 이 MEMBER 가 포함된 경우에만 인증 가능
+=======
+					.antMatchers("/member/**") // 해당 경로는 인증이 필요
+					.hasRole("USER") // ROLE 이 MEMBER 가 포함된 경우에만 인증 가능
+>>>>>>> 박태선
 					.and()
 					.formLogin()
 						.loginPage("/member/main.do") // 로그인 페이지 설정
@@ -59,9 +64,12 @@ public class SecurityConfig {
 	                    .successHandler(new LoginSuccessHandler()) // 로그인 성공 후 처리할 핸들러
 						.permitAll()
 					.and()
+<<<<<<< HEAD
 						.exceptionHandling()
 						.accessDeniedPage("/main/main.do")
 					.and()
+=======
+>>>>>>> 박태선
 					.logout().logoutUrl("/member/logout.do") // 로그아웃 처리 URL 설정
 					.logoutSuccessUrl("/member/login/loginForm?logout=1") // 로그아웃 성공 후 이동할 페이지
 					.deleteCookies("JSESSIONID"); // 로그아웃 후 쿠키 삭제
