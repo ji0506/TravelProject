@@ -46,11 +46,11 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public String productSearch(Model model, String country, String departure, String plan, String seat, String city, String money) {
-        if (country == "" && departure == "" && plan == "" && seat == "" && city == "" && money == "") {
-            return "redirect:/products/index";
+    public String productSearch(Model model, String country, String departure, String plan, String seat, String city) {
+        if (country == "" && departure == "" && plan == "" && seat == "" && city == "" ) {
+            return "redirect:/products";
         }
-        List<Product> list = productService.getListBySearch(country, departure, plan, seat, city, money);
+        List<Product> list = productService.getListBySearch(country, departure, plan, seat, city);
         listSplitAndAdd(model, list);
         return "/products/index";
     }
@@ -111,6 +111,7 @@ public class ProductController {
         Map<String, Set<String>> cityMap = new HashMap<>();
         countrySet.stream().forEach(country -> {
             Set<String> citySet = new HashSet<>();
+
             list.stream().filter(p -> p.getProCountry().equals(country)).forEach(p -> citySet.add(p.getProCity()));
             cityMap.put(country, citySet);
         });

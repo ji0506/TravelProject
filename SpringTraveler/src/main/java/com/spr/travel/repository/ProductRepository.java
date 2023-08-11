@@ -13,6 +13,8 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Integer>{
 
+
+
     public List<Product> findByProContinent(String continent);
 
     public List<Product> findByProCity(String city);

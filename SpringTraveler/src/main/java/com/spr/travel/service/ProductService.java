@@ -30,7 +30,7 @@ public class ProductService {
 
 	public void productSearch(String country, String departure, String plan, String seat, String city) {productRepository.findAll();}
 
-	public List<Product> getListBySearch(String country, String departure, String plan, String seat, String city, String money)
+	public List<Product> getListBySearch(String country, String departure, String plan, String seat, String city)
 	{return productRepository.findAll();}
 
 	public int updateViewcnt(HttpServletRequest req, HttpServletResponse res, int id, Product product) {
