@@ -4,7 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.spr.travel.domain.Qna;
+import com.spr.travel.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,7 +59,7 @@ public class BoardController {
 
 		List<Board> list = bs.getBoardCateList(menu);
 
-		model.addAttribute("list", list);
+		model.addAttribute("boardlist", list);
 
 		return "board/faq";
 	}
@@ -83,8 +86,8 @@ public class BoardController {
 	@GetMapping("/notice.do")
 	public String notice( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		List<Qna> list = qs.getBoardList();
-		model.addAttribute("boardlist", list);
+		List<Board> list = bs.getBoardCateList(6);
+		model.addAttribute("noticeList", list);
 		return "board/notice";
 	}
 	@GetMapping("/noticeWrite.do")
@@ -94,4 +97,28 @@ public class BoardController {
 		model.addAttribute("boardlist", list);
 		return "board/noticeWrite";
 	}
+	@PostMapping("/qnaWrite.do")
+	public String qnaWrite(@RequestParam("qna_title")String title,
+						   @RequestParam("qna_question")String content, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
+		Qna vo= new Qna(title,content);
+		vo.setUserId(user.getUserId());
+		qs.Write(vo);
+		return "redirect:/board/qna.do";
+	}
+	@PostMapping("/noticeWrite.do")
+	public String noticeWrite(@RequestParam("notice_title")String title,
+						   @RequestParam("notice_content")String content,@RequestParam("notice_category")int cate,HttpServletRequest request) throws Exception {
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
+		Board vo= new Board(title,content,6);
+		vo.setUserId(user.getUserId());
+		bs.Write(vo);
+		return "redirect:/board/notice.do";
+	}
+
 }

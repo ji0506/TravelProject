@@ -63,7 +63,7 @@
 							</tr>
 						</th:block>
 					</th:block>
-					<th:block th:if="${qnaNoticeList == null}">
+					<th:block th:if="${qnaList == null}">
 						<tr>
 							<td colspan="4"><h1>현재 게시글이 존재하지 않습니다.</h1></td>
 						</tr>
@@ -78,17 +78,17 @@
 								</th:block>
 								<th:block th:if="${q.qna_answer != null}">
 									<td id="2" class="col-sm-1">답변완료</td>
-								</th:block>
-								<th:block th:if="${q.qna_writer == userInfo.member_name or userInfo.member_master eq 'Y' }">
+								</th:block>-->
+								<th:block th:if="${q.userId == session.user.userId  }">
 									<td id="qnaTitle" class="col-sm-6">
-										<a th:href="@{/board/qnaDetail}" th:attr="href='/board/qnaDetail?qna_num=' + ${q.qna_num}" th:text="${q.qnaTitle}"></a>
+										<a th:href="@{/board/qnaDetail}" th:attr="href='/board/qnaDetail?qna_num=' + ${q.qnaNo}" th:text="${q.qnaTitle}"></a>
 									</td>
 								</th:block>
-								<th:block th:if="${q.qna_writer == userInfo.member_name or userInfo.member_master eq 'Y' }">
+								<th:block th:if="${q.userId == session.user.userId  }">
 									<td class="col-sm-6">작성자 외에는 확인할수 없습니다.</td>
-								</th:block>-->
+								</th:block>
 								<td id="qnaWriter" class="col-sm-2">
-									<span th:text="${q.userId}"></span> [[[${q.userId}]]]
+									<span th:text="${q.userId}"></span>
 								</td>
 								<td class="col-sm-2">
 									<span th:text="${#dates.format(q.regDate, 'yyyy.MM.dd')}"></span>

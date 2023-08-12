@@ -50,12 +50,12 @@
           <th:block th:if="${noticeList != null}">
             <th:block th:each="n : ${noticeList}">
               <tr>
-                <td class="col-sm-2" th:text="${n.notice_category}"></td>
-                <td class="col-sm-6"><a th:href="${contextPath}/board/noticeDetail?notice_num=${n.notice_num}"
-                                        th:text="${n.notice_title}"></a></td>
-                <td class="col-sm-2" th:text="${n.notice_writer}"></td>
+                <td class="col-sm-2" th:text="${n.cateNo}"></td>
+                <td class="col-sm-6"><a th:href="@{/board/noticeDetail?notice_num}"
+                                        th:text="${n.title}"></a></td>
+                <td class="col-sm-2" th:text="${n.userId}"></td>
                 <td class="col-sm-2">
-                  <span th:text="${#dates.format(n.notice_regdate, 'yyyy.MM.dd')}"></span>
+                  <span th:text="${#dates.format(n.regDate, 'yyyy.MM.dd')}"></span>
                 </td>
               </tr>
             </th:block>
@@ -116,12 +116,12 @@
             </li>
           </ul>
         </nav>
-      </div>
-      <th:block th:if="${userInfo.member_master eq 'Y'}">
+      </div>-->
+      <th:block th:if="${session.user.userId == 'admin'}">
         <div class="text-end mb-3">
           <button class="btn btn-outline-secondary" id="addBtn">새글 작성</button>
         </div>
-      </th:block>-->
+      </th:block>
     </div>
   </div>
 </section>

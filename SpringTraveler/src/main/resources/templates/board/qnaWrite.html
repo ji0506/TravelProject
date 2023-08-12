@@ -26,15 +26,14 @@
         </div>
       </div>
     </div>
-<!--
+
     <div class="col-md-10 mb-5">
       <h2 class="mb-4">질문과 답변</h2>
-      <form th:action="@{/board/qnaWrite}" method="POST" class="h-100">
+      <form th:action="@{/board/qnaWrite.do}" method="POST" class="h-100">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-        <input type="hidden" name="member_num" th:value="${userInfo.member_num }">
-        <input type="hidden" name="qna_writer" th:value="${userInfo.member_name}">
+        <input type="hidden" name="qna_writer" th:value="${c}">
         <div class="text-end mb-3">
-          <span th:text="${userInfo.member_name}"></span>
+          <span th:text="${session.user.userName}"></span>
         </div>
         <div class="form-floating mb-3">
           <input type="text"  class="form-control" id="floatingInputTitle" name="qna_title">
@@ -47,7 +46,7 @@
         <button type="submit" class="btn btn-outline-secondary">작성 완료</button>
       </form>
     </div>
-  </div>-->
+  </div>
 </section>
 <script src="https://cdn.tiny.cloud/1/mreuxwvmvo99s2c3asxl4t6ujhyqgni44dt6mle4qlfz9pq6/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script>

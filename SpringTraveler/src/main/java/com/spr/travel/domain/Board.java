@@ -58,6 +58,10 @@ public class Board implements Serializable {
 		this.content = content;
 		this.cateNo = cateNo;
 	}
+	public Board(String title, String content) {
+		this.title = title;
+		this.content = content;
+	}
 
 
 }
