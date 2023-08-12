@@ -61,15 +61,15 @@
                     <div class="col-sm-2 col-md-3 col-lg-4 col-xl-5 text-center text-sm-end">
                       <p class="card-text">잔여좌석: [[${product.proSeat}]]</p>
                       <th:block th:if="${product.proSeat > 5}">
-                        <button class="btn btn-primary" data-num="${product.proNo}">상세보기</button>
+                        <button class="btn btn-primary" th:data-num="${product.proNo}">상세보기</button>
                       </th:block>
                       <th:block th:if="${5 >= product.proSeat and product.proSeat > 0}">
-                        <button type="button" class="btn btn-warning position-relative" data-num="${product.proNo}">상세보기
+                        <button type="button" class="btn btn-warning position-relative" th:data-num="${product.proNo}">상세보기
                           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-warning">마감 임박!</span>
                         </button>
                       </th:block>
                       <th:block th:if="${product.proSeat eq 0}">
-                        <button type="button" class="btn btn-danger position-relative" data-num="${product.proNo}">상세보기
+                        <button type="button" class="btn btn-danger position-relative" th:data-num="${product.proNo}">상세보기
                           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">마감!</span>
                         </button>
                       </th:block>
@@ -154,9 +154,9 @@
 			html += '<p class="card-text">잔여좌석:' + product.proSeat  + '</p>';
 			const seat = product.proSeat;
 			if (seat > 5) {
-				html += '<button class="btn btn-primary" data-num="' + product.proNo  + '">상세보기</button>';
+				html += '<button class="btn btn-primary" th:data-num="' + product.proNo  + '">상세보기</button>';
 			} else {
-				html += '<button type="button" class="btn btn-danger position-relative" data-num="' + product.proNo  + '">상세보기';
+				html += '<button type="button" class="btn btn-danger position-relative" th:data-num="${product.proNo}">상세보기';
 				html += '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">마감 임박!</span></button>';
 			}
 			html += '</div></div></div>';
@@ -172,7 +172,11 @@
 		day = (day >= 10) ? day : "0" + day;
 		return year + "-" + month + "-" + day;
 	};
-
+    main.addEventListener("click", function (event) {
+		const target = event.target;
+		if (target.tagName !== "BUTTON") return;
+		location.href =target.getAttribute("data-num");
+	});
 
 </script>
 </html>

@@ -1,7 +1,9 @@
 package com.spr.travel.service;
 
+import java.util.Date;
 import java.util.List;
 
+import com.spr.travel.domain.ProductDetail;
 import com.spr.travel.domain.Reservation;
 import com.spr.travel.reservation.ReservationVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +26,14 @@ public class ProductService {
 		return productRepository.findAll();
 	}
 
-
-
-
-
-	public void productSearch(String country, String departure, String plan, String seat, String city) {productRepository.findAll();}
+	public List<Product> productSearch(String country, String departure, String plan, String seat, String city)
+	{return null;
+/*		productRepository.findByProCountry(country),
+		productRepository.findByProDeparture(departure),
+		productRepository.findByProPlan(plan),
+		productRepository.findByProSeat(seat),
+		productRepository.findByProCity(city);*/
+	}
 
 	public List<Product> getListBySearch(String country, String departure, String plan, String seat, String city)
 	{return productRepository.findAll();}
@@ -51,6 +56,19 @@ public class ProductService {
 		return productRepository.findByProNo(id);
 	};
 
+	public void getListByNew (Product product){
+		productRepository.save(product);
+	}
+
+
+	public int getProNo(Product proNo){
+		return productRepository.findByProNo(proNo);
+	}
+
+	public int deleteProduct(int id){
+			productRepository.deleteById(id);
+		return 1;
+	}
 
 
 }
