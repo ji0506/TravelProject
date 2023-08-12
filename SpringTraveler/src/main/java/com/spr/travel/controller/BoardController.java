@@ -14,17 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spr.travel.domain.Board;
-import com.spr.travel.domain.Qna;
+import com.spr.travel.domain.Product;
 import com.spr.travel.service.BoardService;
 import com.spr.travel.service.QnaService;
 
 @Controller
 @RequestMapping("/board/*")
 public class BoardController {
-	
 	@Autowired
 	private BoardService bs;
-
 	@Autowired
 	private QnaService qs;
 
@@ -45,8 +43,8 @@ public class BoardController {
 	}
 	
 	@PostMapping("/faqWrite.do")
-	public String main3( @RequestParam("faq_category")int cateNo, 
-			@RequestParam("faq_title")String title, @RequestParam("faq_content")String content) throws Exception {
+	public String main3( @RequestParam("faq_category")int cateNo,
+						 @RequestParam("faq_title")String title, @RequestParam("faq_content")String content) throws Exception {
 		Board vo= new Board(title,content,cateNo);
 		bs.Write(vo);
 		return "redirect:/board/faq.do";
@@ -67,16 +65,33 @@ public class BoardController {
 	public String qna( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		List<Qna> list = qs.getBoardList();
-		model.addAttribute("boardlist", list);
+		model.addAttribute("qnaList", list);
 		return "board/qna";
 	}
 
 	@GetMapping("/qnaWrite.do")
 	public String qnaWrite( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		List<Qna> list = qs.getBoardList();
-		model.addAttribute("boardlist", list);
+
 		return "board/qnaWrite";
 	}
+	@GetMapping("/qnaDetail.do")
+	public String qnaDetail( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		return "board/qnaDetail";
+	}
+	@GetMapping("/notice.do")
+	public String notice( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		List<Qna> list = qs.getBoardList();
+		model.addAttribute("boardlist", list);
+		return "board/notice";
+	}
+	@GetMapping("/noticeWrite.do")
+	public String noticeWrite( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		List<Qna> list = qs.getBoardList();
+		model.addAttribute("boardlist", list);
+		return "board/noticeWrite";
+	}
 }

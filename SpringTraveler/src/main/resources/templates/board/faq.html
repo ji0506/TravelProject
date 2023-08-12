@@ -32,9 +32,9 @@
 				<div class="card mb-3">
 					<div class="card-header">고객센터</div>
 					<div class="list-group list-group-flush">
-						<a href="/board/faq" class="list-group-item active" id="faqBoard">자주 묻는 질문</a>
-						<a href="/board/qna" class="list-group-item" id="qnaBoard">질문과 답변</a>
-						<a href="/board/notice" class="list-group-item" id="noticeBoard">공지사항</a>
+						<a href="/board/faq.do" class="list-group-item active" id="faqBoard">자주 묻는 질문</a>
+						<a href="/board/qna.do" class="list-group-item" id="qnaBoard">질문과 답변</a>
+						<a href="/board/notice.do" class="list-group-item" id="noticeBoard">공지사항</a>
 					</div>
 				</div>
 			</div>
@@ -58,23 +58,22 @@
 				<!-- 메뉴버튼 -->
 				<div class="row mb-4">
 					<div class="btn-group" role="group">
-						<button value="전체" type="button" class="btn btn-outline-dark" id="all">전체보기</button>
-						<button value="해외여행" type="button" class="btn btn-outline-dark" id="trip">해외여행</button>
-						<button value="항공" type="button" class="btn btn-outline-dark" id="airline">항공</button>
-						<button value="예약/결제" type="button" class="btn btn-outline-dark" id="reservation">예약/결제</button>
-						<button value="여권/비자/환전" type="button" class="btn btn-outline-dark"
+						<button value="전체" name="menu" type="button" class="btn btn-outline-dark" id="all">전체보기</button>
+						<button value="1" name="menu" type="button" class="btn btn-outline-dark" id="trip">해외여행</button>
+						<button value="2" name="menu" type="button" class="btn btn-outline-dark" id="airline">항공</button>
+						<button value="3" name="menu" type="button" class="btn btn-outline-dark" id="reservation">예약/결제</button>
+						<button value="4" name="menu" type="button" class="btn btn-outline-dark"
 							id="passport">여권/비자/환전</button>
-						<button value="홈페이지/기타" type="button" class="btn btn-outline-dark" id="other">홈페이지/기타</button>
+						<button value="5" type="button" class="btn btn-outline-dark" id="other">홈페이지/기타</button>
 					</div>
 				</div>
 
 				<!-- 페이징 -->
 				<div id="listAll" class="accordion mb-3">
-					<c:set var="number" value="0" />
-					<c:choose>
-						<c:when test="${list ne null }">
-							<th:block th:each="item, number : ${list}">
-						
+					<th:set var="number" value="0" />
+						<th:when test="${list ne null }">
+							<th:block th:each="item, number : ${boardlist}">
+
 								<div class="accordion mb-2" th:id="accordionPanelsStayOpenExample">
 									<div class="accordion-item">
 										<h2 class="accordion-header" id="panelsStayOpen-heading-${number.index}">
@@ -105,12 +104,11 @@
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<input type="hidden" name="faq_num" value="${item.brdNo}">
 								</form>
-								</c:forEach>
-						</c:when>
+							</th:block>
+						</th:when>
 						<!-- <c:otherwise>
 							<h1>게시글이 없습니다.</h1>
 						</c:otherwise> -->
-					</c:choose>
 				</div>
 
 				<!-- Modal -->
@@ -137,49 +135,49 @@
 				</div>
 
 				<!-- 페이징처리 -->
-				<div id="pagingAll">
+			<!--	<div id="pagingAll">
 					<nav id="allPaging" aria-label="Page navigation mb-3">
 						<ul class="pagination justify-content-center">
-							<c:if test="${pm.first}">
+							<th:block th:if="${pm.first}">
 								<li class="page-item">
 									<a class="page-link" href="${pm.makeQuery(1)}">
 										<span aria-hidden="true">&laquo;</span>
 									</a>
 								</li>
-							</c:if>
-							<c:if test="${pm.prev}">
+							</th:block>
+							<th:block th:if="${pm.prev}">
 								<li class="page-item">
 									<a class="page-link" href="${pm.makeQuery(pm.startPage-1)}">&lt;</a>
 								</li>
-							</c:if>
-							<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
+							</th:block>
+							<th:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
 								<li class="page-item" aria-current="page" ${( pm.cri.page==i)? 'class="active"' :''}>
-									<a id="pageNum" class="page-link" href="${pm.makeQuery(i)}">${i}</a>
+									<a id="pageNum" class="page-link" href="${pm.makeQuery(i)}">1</a>
 								</li>
-							</c:forEach>
-							<c:if test="${pm.next}">
+							</th:forEach>
+							<th:block th:if="${pm.next}">
 								<li class="page-item">
 									<a class="page-link" href="${pm.makeQuery(pm.endPage+1)}">&gt;</a>
 								</li>
-							</c:if>
-							<c:if test="${pm.last}">
+							</th:block>
+							<th:block th:if="${pm.last}">
 								<li class="page-item">
 									<a class="page-link" href="${pm.makeQuery(pm.maxPage)}">
 										<span aria-hidden="true">&raquo;</span>
 									</a>
 								</li>
-							</c:if>
+							</th:block>
 						</ul>
 					</nav>
 				</div>
 
 				<div class="row">
-					<c:if test="${userInfo.member_master eq 'Y'}">
+					<th:block th:if="${userInfo.member_master eq 'Y'}">
 						<div class="text-end mb-3">
 							<button class="btn btn-outline-secondary" id="addBtn">추가하기</button>
 						</div>
-					</c:if>
-
+					</th:block>
+-->
 				</div>
 			</div>
 		</div>
@@ -190,7 +188,7 @@
 			faqnum = num;
 			console.log(faqnum)
 		}
-		/* var userInfo= "<%=session.getAttribute("userInfo")%>"; 
+		/* var userInfo= "<%=session.getAttribute("userInfo")%>";
 		console.log("userInfo: "+userInfo);
 		var userMaster= '${userInfo.member_master}';*/
 
@@ -211,33 +209,43 @@
 		});
 
 		$("#all").on("click", function () {
-			location.href = "${contextPath}/board/faq";
+			location.href = "/board/faq.do";
 		});
 
 		$("#trip").on("click", function () {
-			location.href = "${contextPath}/board/faq/trip";
+			var menu = $("#trip").val();
+
+			location.href = "/board/trip.do?menu=" + menu;
 		});
 
 		$("#airline").on("click", function () {
-			location.href = "${contextPath}/board/faq/airline";
+			var menu = $("#airline").val();
+
+			location.href = "/board/trip.do?menu="+menu;
 		});
 
 		$("#reservation").on("click", function () {
-			location.href = "${contextPath}/board/faq/reserv";
+			var menu = $("#reservation").val();
+
+			location.href = "/board/trip.do?menu="+menu;
 		});
 
 		$("#passport").on("click", function () {
-			location.href = "${contextPath}/board/faq/pass";
+			var menu = $("#passport").val();
+
+			location.href = "/board/trip.do?menu="+menu;
 		});
 
 		$("#other").on("click", function () {
-			location.href = "${contextPath}/board/faq/other";
+			var menu = $("#other").val();
+
+			location.href = "/board/trip.do?menu="+menu;
 		});
 
 		function clickDel(formName) {
 			for (var tag of formName) {
 				if (tag.faq_num.value == faqnum) {
-					tag.action = "${contextPath}/board/faqDelete";
+					tag.action = "/board/faqDelete";
 					tag.method = "post";
 					tag.submit();
 				}
@@ -245,7 +253,7 @@
 		}
 
 		$("#btnSearch").click(function () {
-			location.href = "${contextPath}/board/faq?keyword=" + $("#keyword").val();
+			location.href = "/board/faq?keyword=" + $("#keyword").val();
 
 		});
 
@@ -258,21 +266,7 @@
 
 		var pageUrl = window.location.href;
 		$(window).on('load', function () {
-			$('.btn-group').siblings('button').removeClass('active');
 
-			if (pageUrl.indexOf('trip') > -1) {
-				$("#trip").addClass('active');
-			} else if (pageUrl.indexOf('airline') > -1) {
-				$("#airline").addClass('active');
-			} else if (pageUrl.indexOf('reserv') > -1) {
-				$("#reservation").addClass('active');
-			} else if (pageUrl.indexOf('pass') > -1) {
-				$("#passport").addClass('active');
-			} else if (pageUrl.indexOf('other') > -1) {
-				$("#other").addClass('active');
-			} else if (pageUrl.indexOf('airline') > -1) {
-				$(".btn-outline-dark").removeClass('active');
-			}
 		});
 
 	</script>
