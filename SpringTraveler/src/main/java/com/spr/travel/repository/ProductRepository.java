@@ -1,16 +1,10 @@
 package com.spr.travel.repository;
 
-import com.spr.travel.domain.ProductDetail;
-import com.spr.travel.domain.Reservation;
-import com.spr.travel.domain.User;
-import com.spr.travel.reservation.ReservationVO;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.spr.travel.domain.Product;
 import org.springframework.data.jpa.repository.Query;
-
 import java.util.List;
-import java.util.Optional;
+
 
 
 public interface ProductRepository extends JpaRepository<Product, Integer>{
@@ -26,12 +20,12 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
     @Query(nativeQuery = true, value ="select * from product where pro_city = :city")
     public List<Product> findByProCity(String city);
 
-    public List<Product> findByProContinent(String city);
+    public List<Product> findByProContinent(String continent);
 
 
-    public Product findByProNo(int id);
+    public Product findByProNo(int id); // 상풍 id로 찾기
 
 
     @Query(nativeQuery = true, value ="select max(pro_no) from product")
-    public int findByProNo(Product proNo);
+    public int findByProNo(Product proNo); // 가장 최근에 등록된 상품 id로 상품 찾기
 }
