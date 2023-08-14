@@ -2,23 +2,34 @@ package com.spr.travel.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.spr.travel.domain.User;
-import com.spr.travel.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spr.travel.domain.Product;
 import com.spr.travel.domain.ProductDetail;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.spr.travel.domain.SearchForm;
+import com.spr.travel.domain.User;
+import com.spr.travel.service.DetailService;
+import com.spr.travel.service.ProductService;
+import com.spr.travel.service.ReservationService;
 
 @Controller
 @RequestMapping("/products/*")
@@ -44,11 +55,14 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public String productSearch(Model model, String country, String departure, String plan, String seat, String city) {
-        if (country == "" && departure == "" && plan == "" && seat == "" && city == "" ) {
+    public String productSearch(Model model, SearchForm search) {
+        if (search.getCountry() == "" && search.getDeparture() == "" && search.getPlan() == "" && search.getSeat() == "" && search.getCity() == "" ) {
             return "redirect:/products/index";
         }
-        List<Product> list = productService.productSearch(country,departure,plan,seat,city);
+        List<Product> list = productService.productSearch(search);
+        
+        model.addAttribute("list", list);
+
         listSplitAndAdd(model, list);
         return "/products/index";
     }
@@ -92,6 +106,7 @@ public class ProductController {
     public String indexByContinent(@PathVariable String continent, Model model) {
         List<Product> list = productService.getListByContinent(continent);
         model.addAttribute("continent", continent);
+        model.addAttribute("list", list);
         listSplitAndAdd(model, list);
         return "/products/index";
     }
@@ -149,7 +164,6 @@ public class ProductController {
             cityMap.put(country, citySet);
         });
         if (model.getAttribute("continent") ==null) model.addAttribute("continent", "검색 결과");
-        model.addAttribute("list", list);
         model.addAttribute("countrySet", countrySet);
         model.addAttribute("cityMap", cityMap);
     }

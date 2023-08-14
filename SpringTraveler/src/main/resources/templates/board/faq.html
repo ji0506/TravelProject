@@ -134,8 +134,8 @@
 					</div>
 				</div>
 
-				<!-- 페이징처리 -->
-			<!--	<div id="pagingAll">
+				<!-- 페이징처리 
+				<div id="pagingAll">
 					<nav id="allPaging" aria-label="Page navigation mb-3">
 						<ul class="pagination justify-content-center">
 							<th:block th:if="${pm.first}">
@@ -169,15 +169,14 @@
 							</th:block>
 						</ul>
 					</nav>
-				</div>
+				</div>-->
 
 				<div class="row">
-					<th:block th:if="${userInfo.member_master eq 'Y'}">
+					<th:block sec:authorize="hasAnyRole('ROLE_ADMIN')">
 						<div class="text-end mb-3">
 							<button class="btn btn-outline-secondary" id="addBtn">추가하기</button>
 						</div>
-					</th:block>
--->
+			    	</th:block>
 				</div>
 			</div>
 		</div>

@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.spr.travel.domain.Qna;
-import com.spr.travel.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,18 +15,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spr.travel.domain.Board;
-import com.spr.travel.domain.Product;
+import com.spr.travel.domain.Notice;
+import com.spr.travel.domain.Qna;
+import com.spr.travel.domain.User;
 import com.spr.travel.service.BoardService;
 import com.spr.travel.service.QnaService;
 
 @Controller
 @RequestMapping("/board/*")
 public class BoardController {
+	
 	@Autowired
 	private BoardService bs;
+	
 	@Autowired
 	private QnaService qs;
-
+	
+	
 	@GetMapping("/faq.do")
 	public String main(Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
 			
@@ -86,17 +89,34 @@ public class BoardController {
 	@GetMapping("/notice.do")
 	public String notice( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		List<Board> list = bs.getBoardCateList(6);
+		List<Notice> list = bs.getNoticeList();
 		model.addAttribute("noticeList", list);
+
 		return "board/notice";
 	}
 	@GetMapping("/noticeWrite.do")
 	public String noticeWrite( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		List<Qna> list = qs.getBoardList();
-		model.addAttribute("boardlist", list);
+//		List<Qna> list = qs.getBoardList();
+//		model.addAttribute("boardlist", list);
 		return "board/noticeWrite";
 	}
+
+	@PostMapping("/noticeWrite.do")
+	public String noticeWrite(@RequestParam("notice_title")String title,
+						   @RequestParam("notice_content")String content,@RequestParam("notice_category")int cate,HttpServletRequest request) throws Exception {
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
+		Notice vo= new Notice(title,content,cate);
+		vo.setUserId(user.getUserId());
+		bs.Write(vo);
+		
+		return "redirect:/board/notice.do";
+	}
+
+	
 	@PostMapping("/qnaWrite.do")
 	public String qnaWrite(@RequestParam("qna_title")String title,
 						   @RequestParam("qna_question")String content, HttpServletRequest request) throws Exception {
@@ -107,18 +127,6 @@ public class BoardController {
 		vo.setUserId(user.getUserId());
 		qs.Write(vo);
 		return "redirect:/board/qna.do";
-	}
-	@PostMapping("/noticeWrite.do")
-	public String noticeWrite(@RequestParam("notice_title")String title,
-						   @RequestParam("notice_content")String content,@RequestParam("notice_category")int cate,HttpServletRequest request) throws Exception {
-
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-
-		Board vo= new Board(title,content,6);
-		vo.setUserId(user.getUserId());
-		bs.Write(vo);
-		return "redirect:/board/notice.do";
 	}
 
 }

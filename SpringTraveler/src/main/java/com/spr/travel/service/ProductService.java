@@ -1,20 +1,16 @@
 package com.spr.travel.service;
 
-import java.util.Date;
 import java.util.List;
 
-import com.spr.travel.domain.ProductDetail;
-import com.spr.travel.domain.Reservation;
-import com.spr.travel.reservation.ReservationVO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spr.travel.domain.Product;
+import com.spr.travel.domain.SearchForm;
 import com.spr.travel.repository.ProductRepository;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class ProductService {
@@ -26,8 +22,11 @@ public class ProductService {
 		return productRepository.findAll();
 	}
 
-	public List<Product> productSearch(String country, String departure, String plan, String seat, String city)
-	{return null;
+
+	public List<Product> productSearch(Product search)
+//	public List<Product> productSearch(String country, String departure, String plan, String seat, String city)
+	{
+		return productRepository.findOne(search);
 /*		productRepository.findByProCountry(country),
 		productRepository.findByProDeparture(departure),
 		productRepository.findByProPlan(plan),

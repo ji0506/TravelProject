@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 @NoArgsConstructor
@@ -49,7 +52,14 @@ public class User {
 	private String userGrade;
 
 	private String userTypeCd;
-	
+
+	@Column(length=2)
 	private String authId;
+	
+	@OneToOne
+	@JoinColumn(name = "authId", insertable = false, updatable = false)
+	@JsonIgnore
+	private UserAuth userAuth;
+
 }
 

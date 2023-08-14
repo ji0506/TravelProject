@@ -117,11 +117,11 @@
           </ul>
         </nav>
       </div>-->
-      <th:block th:if="${session.user.userId == 'admin'}">
-        <div class="text-end mb-3">
-          <button class="btn btn-outline-secondary" id="addBtn">새글 작성</button>
-        </div>
-      </th:block>
+		<th:block sec:authorize="hasAnyRole('ROLE_ADMIN')">
+        	<div class="text-end mb-3">
+          		<button class="btn btn-outline-secondary" id="addBtn">새글 작성</button>
+        	</div>
+    	</th:block>
     </div>
   </div>
 </section>

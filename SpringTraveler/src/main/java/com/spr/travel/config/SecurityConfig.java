@@ -46,9 +46,8 @@ public class SecurityConfig {
 				authorize.antMatchers("/css/**", "/images/**", "/js/**", "/main/*.do", "/member/*", "/member/*.do")
 					.permitAll() // 해당 경로는 인증 없이 접근 가능
 					.antMatchers("/products/**","/member/**","/products/*.do") // 해당 경로는 인증이 필요
-					.hasRole("USER") // ROLE 이 MEMBER 가 포함된 경우에만 인증 가능
-//					.antMatchers("") // 해당 경로는 인증이 필요
-//					.hasRole("ADMIN") // ROLE 이 MEMBER 가 포함된 경우에만 인증 가능
+					.hasAnyRole("USER","ADMIN") // ROLE 이 MEMBER 가 포함된 경우에만 인증 가능
+					//					.antMatchers("") // 해당 경로는 인증이 필요
 					.and()
 					.formLogin()
 						.loginPage("/member/main.do") // 로그인 페이지 설정

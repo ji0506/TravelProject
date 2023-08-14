@@ -51,7 +51,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	       
 
 		List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
-        roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+        roles.add(new SimpleGrantedAuthority(user.getUserAuth().getAuthName()));
         
         UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(user, password, roles);
         result.setDetails(user);
