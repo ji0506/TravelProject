@@ -33,7 +33,26 @@ public class DetailService {
 		return 0;
 	}
 	public ProductDetail getFullProductById(int id){
-		return detailRepository.findByDetailNo(id);
+		return detailRepository.findByProNo(id);
 	};
+
+	public ProductDetail updateDetailByProNo(int id) {
+		ProductDetail detail = detailRepository.findByProNo(id);
+			detailRepository.save(detail);
+		return detail;
+	}
+
+	public void getProductByProNo(ProductDetail detail){
+		detailRepository.save(detail);
+
+	}
+	public void getListByNew (ProductDetail detail){
+		detailRepository.save(detail);
+	}
+
+	public void deleteFileById(int id){
+		ProductDetail detail = detailRepository.findById(id);
+		detailRepository.delete(detail);
+	}
 
 }

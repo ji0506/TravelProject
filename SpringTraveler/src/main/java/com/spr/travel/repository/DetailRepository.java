@@ -6,11 +6,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.spr.travel.domain.ProductDetail;
 import com.spr.travel.domain.Qna;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 
 public interface DetailRepository extends JpaRepository<ProductDetail, Integer>{
 
-    public ProductDetail findByDetailNo(int id);
+    public ProductDetail findByProNo(int id);
+
+    public ProductDetail findById(int id);
+
+
 }

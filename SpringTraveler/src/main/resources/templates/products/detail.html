@@ -62,9 +62,9 @@
                         <div class="col">
                             <span class="fs-6 badge text-bg-primary me-2 p-2">잔여좌석</span>
                             <span class="card-text d-inline-block">[[${product.proSeat}]]</span>
-                            <c:if test="${product.product_seat <= 5}">
+                            <th:block th:if="${product.proSeat <= 5}">
                                 <span class="ms-2 badge text-bg-danger">마감 임박</span>
-                            </c:if>
+                            </th:block>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -99,21 +99,23 @@
             </div>
             <div class="row mb-3">
                 <div class="col d-flex justify-content-around">
-                    <sec:authorize access="anonymous">
+                   <!-- <th:block sec:authorize="anonymous">-->
                         <a th:href="@{${'/products/' + product.proNo + '/reservation'}}" class="btn btn-primary" id="reserveBtn">예약하기</a>
                         <a th:href="@{../board/faq.do}" class="btn btn-primary" id="qnaBtn">문의하기</a>
-                    </sec:authorize>
-                 <!--   <sec:authorize access="hasRole('ROLE_MEMBER')">
-                        <a th:href="@{products/${product.proNo}/reservation}" class="btn btn-primary" id="reserveBtn">예약하기</a>
+                    <!--</th:block>-->
+                    <!--<th:block sec:authorize="hasRole('ROLE_USER')">-->
+                    <a th:href="@{${'/products/' + product.proNo + '/reservation'}}" class="btn btn-primary" id="reserveBtn">예약하기</a>
                         <a th:href="@{board/faq}" class="btn btn-primary" id="qnaBtn">문의하기</a>
-                    </sec:authorize>-->
-                   <!-- <sec:authorize access="hasAnyRole('ROLE_MASTER','ROLE_ADMIN')">
-                        <a th:href="@{products/${product.proNo}/update}" class="btn btn-primary" id="reserveBtn">상품 수정</a>
-                        <a id="deleteBtn" th:href="@{products/${product.proNo}/delete}" class="btn btn-primary" id="reserveBtn">상품 삭제</a>
+                   <!-- </th:block>-->
+                    <!--<th:block sec:authorize="hasRole('ROLE_ADMIN')">-->
+                        <a th:href="@{${'/products/' + product.proNo + '/update'}}" class="btn btn-primary" id="reserveBtn">수정</a>
+                        <!--<a th:href="@{products/${product.proNo}/update}" class="btn btn-primary" id="reserveBtn">상품 수정</a>-->
+                        <a id="deleteBtn" th:href="@{${'/products/' + product.proNo + '/delete'}}" class="btn btn-primary">상품 삭제</a>
+                        <!--<a id="deleteBtn" th:href="@{products/${product.proNo}/delete}" class="btn btn-primary">상품 삭제</a>-->
                         <form id="deleteForm" class="d-none">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         </form>
-                    </sec:authorize>-->
+                    <!--</th:block>-->
                 </div>
             </div>
         </div>

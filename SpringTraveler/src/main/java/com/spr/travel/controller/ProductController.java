@@ -1,10 +1,8 @@
 package com.spr.travel.controller;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,8 +32,8 @@ public class ProductController {
     private ReservationService reservationService;
 
 
-    @GetMapping("/main")
-    public String main(Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
+    @GetMapping("/index")
+    public String index(Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
 
         List<Product> list = productService.getProductList();
 
@@ -48,15 +46,15 @@ public class ProductController {
     @GetMapping("/search")
     public String productSearch(Model model, String country, String departure, String plan, String seat, String city) {
         if (country == "" && departure == "" && plan == "" && seat == "" && city == "" ) {
-            return "redirect:/products";
+            return "redirect:/products/index";
         }
-        List<Product> list = productService.getListBySearch(country, departure, plan, seat, city);
+        List<Product> list = productService.productSearch(country,departure,plan,seat,city);
         listSplitAndAdd(model, list);
         return "/products/index";
     }
 
     @GetMapping("/{id}")
-    public String renderDetail(@PathVariable int id, HttpServletRequest req, HttpServletResponse res,Product product, Model model) {
+    public String renderDetail(@PathVariable("id") int id, HttpServletRequest req, HttpServletResponse res,Product product, Model model) {
         /*productService.updateViewcnt(req, res, id,product);*/
         ProductDetail detail = detailService.getFullProductById(id);
         Product product1 = productService.getProductById(id);
@@ -70,7 +68,23 @@ public class ProductController {
 
     @GetMapping("/new")
     public String renderNewForm() {
+
         return "products/new";
+    }
+
+    @PostMapping("/index")
+    public String postForm(Product product,ProductDetail detail ,@RequestParam("proDepartureStr") String proDeparture,@RequestParam("proArriveStr") String proArrive) throws ParseException {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        product.setProDeparture(formatter.parse(proDeparture));
+        product.setProArrive(formatter.parse(proArrive));
+
+//        productService.getProNo(product);
+        productService.getListByNew(product);
+        detail.setProNo(product.getProNo());
+        detailService.getListByNew(detail);
+        //        detailService.getProductByProNo(detail);
+        return "redirect:/products/" + product.getProNo();
     }
 
 
@@ -91,7 +105,7 @@ public class ProductController {
 
        @GetMapping("/{id}/reservation")
     public String renderReservationForm(@PathVariable int id, Model model, HttpSession session, RedirectAttributes rttr) {
-        User loginMember = (User) session.getAttribute("userInfo");
+        User loginMember = (User) session.getAttribute("user");/*"userInfo"*/
         if (loginMember != null) {
             if (reservationService.getReservationOfMember(loginMember.getUserId(), id) != null) {
                 rttr.addFlashAttribute("flashMessage", "이미 예약하신 상품입니다.");
@@ -102,7 +116,26 @@ public class ProductController {
         return "/products/reserve";
     }
 
+    @GetMapping("/{id}/update")
+    public String renderUpdateForm(@PathVariable int id, Model model) {
+        model.addAttribute("product", productService.getProductById(id));
+        model.addAttribute("product_detail", detailService.updateDetailByProNo(id));
+        return "products/update";
+    }
 
+    @PostMapping("/{id}/delete")
+    public String deleteProduct(@PathVariable int id, RedirectAttributes rttr) throws Exception {
+        String redirectUrl = "redirect:/products/";
+        detailService.deleteFileById(id);
+        int result = productService.deleteProduct(id);
+        if (result > 0) {
+            rttr.addFlashAttribute("flashMessage", "정상적으로 삭제가 완료되었습니다.");
+            return redirectUrl;
+        } else {
+            rttr.addFlashAttribute("flashMessage", "삭제 중 오류가 발생하였습니다.");
+            return redirectUrl + id;
+        }
+    }
 
     private void listSplitAndAdd(Model model, List<Product> list) {
         Set<String> countrySet = new HashSet<>();
@@ -120,8 +153,6 @@ public class ProductController {
         model.addAttribute("countrySet", countrySet);
         model.addAttribute("cityMap", cityMap);
     }
-
-
 
 }
 
