@@ -73,7 +73,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 						.and()
 							.logout()
 							.logoutUrl("/member/logout.do") // 로그아웃 처리 URL 설정
-							.logoutSuccessUrl("/member/login.do?logout=1") // 로그아웃 성공 후 이동할 페이지
+							.logoutSuccessUrl("/member/main.do?logout=1") // 로그아웃 성공 후 이동할 페이지
 							.deleteCookies("JSESSIONID"); // 로그아웃 후 쿠키 삭제
 			} catch (Exception e) {
 				throw new RuntimeException(e);

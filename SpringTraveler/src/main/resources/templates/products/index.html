@@ -92,6 +92,9 @@
 					</th:block>
 				</main>
 
+				<th:block sec:authorize="hasAnyRole('ROLE_ADMIN')">
+					<a id="newBtn" th:href="@{/products/new}" class="btn btn-primary">상품 등록</a>
+				</th:block>
 			</div>
 			<div class="card mb-3 position-fixed translate-middle d-none d-lg-block">
 				<div class="card-header ">
