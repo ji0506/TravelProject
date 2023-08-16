@@ -47,17 +47,19 @@ public class Board implements Serializable {
 	@Column(length=11)	
 	private String userId;
 
-	
+	//기본 생성자
 	public Board() {
 	
 	}
-
+	//제목, 내용, 카테고리 내용 생성자
 	public Board(String title, String content, int cateNo) {
 		super();
 		this.title = title;
 		this.content = content;
 		this.cateNo = cateNo;
 	}
+
+	//제목, 내용 생성자
 	public Board(String title, String content) {
 		this.title = title;
 		this.content = content;

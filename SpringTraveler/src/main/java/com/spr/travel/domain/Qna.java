@@ -37,10 +37,12 @@ public class Qna implements Serializable {
 	@Column(length=5)
 	private int cnt;
 
+	//기본 생성자
 	public Qna() {
 
 	}
 
+	//제목, 내용 생성자
 	public Qna(String title, String content) {
 		this.qnaTitle=title;
 		this.qnaContent=content;

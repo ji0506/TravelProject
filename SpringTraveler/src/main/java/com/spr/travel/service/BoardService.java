@@ -10,20 +10,20 @@ import com.spr.travel.repository.BoardRepository;
 
 @Service
 public class BoardService {
-	
-	
 	@Autowired
 	private BoardRepository BoardRepository;
 
+	// 게시판 전체 리스트 조회
 	public List<Board> getBoardList(){
 		return BoardRepository.findAll();
 	}
-	
+
+	// 게시글 작성
 	public void Write(Board qvo) throws Exception {
 		BoardRepository.save(qvo);
 	}
 
-	
+	// 특정 카테고리의 게시글 리스트 조회
 	public List<Board> getBoardCateList(int cateNo){
 		return BoardRepository.findByCateNo(cateNo);
 	}

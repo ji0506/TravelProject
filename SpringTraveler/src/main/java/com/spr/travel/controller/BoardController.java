@@ -29,96 +29,106 @@ public class BoardController {
 	@Autowired
 	private QnaService qs;
 
-	@GetMapping("/faq.do")
-	public String main(Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
-			
-		List<Board> list = bs.getBoardList();
-		
-		model.addAttribute("boardlist", list);
-		
-		return "board/faq";
+	@GetMapping("/faq.do")//자주 묻는 질문의 페이지 get 요청
+	public String faq(Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
+		List<Board> list = bs.getBoardList(); //게시판 목록을 가져옴
+		model.addAttribute("boardlist", list); //가져온 게시판 목록을 boardlist 모델에 추가
+		return "board/faq"; //자주 묻는 질문의 페이지를 반환해서 클라이언트에게 보여줌
 	}
-	
-	@GetMapping("/faqWrite.do")
-	public String main2(Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
-		
-		return "board/faqWrite";
+	@GetMapping("/faqWrite.do") //자주 묻는 질문 추가 페이지 get 요청
+	public String faqWriteget(Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
+		return "board/faqWrite"; // 질문 추가 페이지 반환
 	}
-	
-	@PostMapping("/faqWrite.do")
-	public String main3( @RequestParam("faq_category")int cateNo,
+	@PostMapping("/faqWrite.do") //자주 묻는 질문 추가 페이지 post 요청
+	public String faqWritepost( @RequestParam("faq_category")int cateNo,
 						 @RequestParam("faq_title")String title, @RequestParam("faq_content")String content) throws Exception {
-		Board vo= new Board(title,content,cateNo);
-		bs.Write(vo);
-		return "redirect:/board/faq.do";
+		Board vo= new Board(title,content,cateNo); //전달받은 파라미터로부터 게시판 작성에 필요한 정보를 추출하여 Board 객체 생성
+		bs.Write(vo);//게시판 데이터를 저장
+		return "redirect:/board/faq.do"; //리다이렉트를 하여 게시판 목록을 보여줌
 	}
-
-
 	@GetMapping("/trip.do")
 	public String trip( @RequestParam("menu")int menu, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		//menu 파라미터를 받아와서 해당 카테고리의 게시글 목록을 가져옴
 		List<Board> list = bs.getBoardCateList(menu);
 
-		model.addAttribute("boardlist", list);
+		model.addAttribute("boardlist", list);// 게시글 목록을 모델에 추가하여 전달
 
-		return "board/faq";
+		return "board/faq"; //자주 묻는 질문의 페이지 반환
 	}
 
-	@GetMapping("/qna.do")
+	@GetMapping("/qna.do")//qna 페이지 get 요청
 	public String qna( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		//Qna 게시판의 전체 게시글 목록을 가져옴
 		List<Qna> list = qs.getBoardList();
-		model.addAttribute("qnaList", list);
-		return "board/qna";
+
+		model.addAttribute("qnaList", list); //qna 게시글 목록을 모델에 추가하여 전달
+
+		return "board/qna"; //qna 페이지로 반환 (이동)
 	}
 
-	@GetMapping("/qnaWrite.do")
-	public String qnaWrite( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@GetMapping("/qnaWrite.do")//글쓰기 페이지 get 요청
+	public String qnaWriteget( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-
+		//qna 게시판에 글 쓰기 페이지로 이동
 		return "board/qnaWrite";
 	}
-	@GetMapping("/qnaDetail.do")
-	public String qnaDetail( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		return "board/qnaDetail";
-	}
-	@GetMapping("/notice.do")
-	public String notice( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		List<Board> list = bs.getBoardCateList(6);
-		model.addAttribute("noticeList", list);
-		return "board/notice";
-	}
-	@GetMapping("/noticeWrite.do")
-	public String noticeWrite( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		List<Qna> list = qs.getBoardList();
-		model.addAttribute("boardlist", list);
-		return "board/noticeWrite";
-	}
-	@PostMapping("/qnaWrite.do")
-	public String qnaWrite(@RequestParam("qna_title")String title,
+	@PostMapping("/qnaWrite.do") //글쓰기 페이지 post 요청
+	public String qnaWritepost(@RequestParam("qna_title")String title,
 						   @RequestParam("qna_question")String content, HttpServletRequest request) throws Exception {
+
+		//세션에서 유저 정보 가져오기
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 
+		//Qna 객체 생성 및 데이터 설정
 		Qna vo= new Qna(title,content);
 		vo.setUserId(user.getUserId());
+
+		//Qna 게시글 작성
 		qs.Write(vo);
-		return "redirect:/board/qna.do";
+
+		return "redirect:/board/qna.do";//qna 페이지로 리다이렉트
 	}
-	@PostMapping("/noticeWrite.do")
+	@GetMapping("/qnaDetail.do") //나의 질문 페이지 get 요청
+	public String qnaDetail( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return "board/qnaDetail";//나의 질문 페이지로 이동
+	}
+	@GetMapping("/notice.do") //공지사항 페이지 get 요청
+	public String notice( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		//게시판 카테고리 번호 6의 공지사항 목록을 가져옴
+		List<Board> list = bs.getBoardCateList(6);
+
+		//공지사항 목록을 모델에 추가하여 전달
+		model.addAttribute("noticeList", list);
+		return "board/notice"; // 공지사항 페이지로 이동
+	}
+	@GetMapping("/noticeWrite.do") //새글 작성 페이지 get 요청
+	public String noticeWrite( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		//Qna 게시판의 전체 게시글 목록을 가져와 추가
+		List<Qna> list = qs.getBoardList();
+		model.addAttribute("boardlist", list);
+
+		return "board/noticeWrite";// 새글 페이지로 이동
+	}
+	@PostMapping("/noticeWrite.do") // 새글 페이지 post 요청
 	public String noticeWrite(@RequestParam("notice_title")String title,
 						   @RequestParam("notice_content")String content,@RequestParam("notice_category")int cate,HttpServletRequest request) throws Exception {
-
+		//세션에서 유저 정보를 가져옴
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 
+		//Board 객체 생성, 데이터 설정
 		Board vo= new Board(title,content,6);
 		vo.setUserId(user.getUserId());
+
+		//공지사항 게시글 작성
 		bs.Write(vo);
-		return "redirect:/board/notice.do";
+
+		return "redirect:/board/notice.do"; //공지사항 페이지로 리다이렉트
 	}
 
 }
