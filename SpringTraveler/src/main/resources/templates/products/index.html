@@ -100,23 +100,23 @@
 				<div class="card-header ">
 					<h3 class="fs-5 card-title text-center m-0">[[${continent}]]</h3>
 				</div>
-				<th:block th:each="country, countryNum : ${countrySet}" th:if="${#lists.isEmpty(countrySet)}">
+				<th:block th:each="country, countryNum : ${countrySet}" th:unless="${#lists.isEmpty(countrySet)}">
 					<div class="accordion" id="accordion">
 						<div class="accordion-product">
-							<h4 class="accordion-header" th:id="heading${countryNum.index}">
-								<button class="accordion-button" th:classappend="${countryNum.index != 1} ? 'collapsed'"
-									type="button" data-bs-toggle="collapse" th:data-bs-target="#collapse${countryNum.index}"
-									aria-expanded="true" th:aria-controls="collapse${countryNum}">
+							<h4 class="accordion-header" id="heading">
+								<button class="accordion-button" th:classappend="${countryNum.count != 1} ? 'collapsed'"
+									type="button" data-bs-toggle="collapse" data-bs-target="#collapse"
+									aria-expanded="true" aria-controls="collapse">
 									[[${country}]]
 								</button>
 							</h4>
-							<div th:id="collapse${countryNum.index}" class="accordion-collapse collapse"  th:classappend="${countryNum == 1} ? 'show'" th:aria-labelledby="heading${countryNum.index}">
+						<!--	<div id="collapse" class="accordion-collapse collapse"  th:classappend="${countryNum == 1} ? 'show'" aria-labelledby="heading">
 					        	<th:block th:each="city : ${cityMap[__${country}__]" th:if="${product.proCountry == country}">
 					            	<div class="accordion-body" th:data-city="${city}">
 					            		[[${city}]]
 									</div>
 								</th:block>
-					      	</div>
+					      	</div>-->
 						</div>
 					</div>
 				</th:block>

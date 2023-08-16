@@ -5,12 +5,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -42,6 +45,9 @@ public class UserController {
 	@Autowired
 	private ProductService productService;
 
+	@Autowired
+	private JavaMailSender mailSender;
+	
 	
 	
 	@RequestMapping("/main.do")
@@ -204,15 +210,24 @@ public class UserController {
 		for(int i=0; i<5;i++) {
 			code +=(int)(Math.random()*10);
 		}
-		/*
-		MimeMessage message = mailSender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(message,"UTF-8");
-		helper.setFrom("yukitozx7@gmail.com");
-		helper.setTo(email);
-		helper.setSubject("인증 메일입니다.");
-		helper.setText("인증 코드 : <h3>["+code+"]</h3>",true);
-		mailSender.send(message);
-		System.out.println("발신 완료");*/
+		try {
+
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message,"UTF-8");
+			helper.setFrom("test@test.com");
+			helper.setTo(email);
+			helper.setSubject("인증 메일입니다.");
+			helper.setText("인증 코드 : <h3>["+code+"]</h3>",true);
+			mailSender.send(message);
+			System.out.println("발신 완료");
+
+			
+		}catch (Exception e) {
+			e.getStackTrace();
+		}
+		
+		
+		
 		return code;
 	}
 

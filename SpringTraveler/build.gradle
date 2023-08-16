@@ -29,7 +29,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'com.sun.mail:javax.mail:1.6.2'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail:2.2.6.RELEASE'
+	
 	implementation 'net.coobird:thumbnailator:0.4.8'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'

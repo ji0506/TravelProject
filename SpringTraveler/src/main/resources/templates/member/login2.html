@@ -47,7 +47,7 @@
 	</div>
 </section>
 <script>
-	$(function() {
+$(function() {
 		$('#formContent #userID').focus();
 		
 		// 에러가 있는 경우 메세지 처리
@@ -67,10 +67,16 @@
 		$('#formContent').find('#userID').focus();
 	}
 
+	$("#idFinder").click(function () {
+		location.href = 'id_find';
+	});
 
+	$("#pwFinder").click(function () {
+		location.href = 'pw_find';
+	});
 
 		
-	});
+});
 	
 </script>
 	<div th:insert="~{/common/footer}"></div>
