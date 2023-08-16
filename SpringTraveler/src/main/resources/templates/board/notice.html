@@ -51,7 +51,7 @@
             <th:block th:each="n : ${noticeList}">
               <tr>
                 <td class="col-sm-2" th:text="${n.cateNo}"></td>
-                <td class="col-sm-6"><a th:href="@{/board/noticeDetail?notice_num}"
+                <td class="col-sm-6"><a th:href="@{/board/noticeDetail.do?notiNo={id}(id=${n.notiNo})}"
                                         th:text="${n.title}"></a></td>
                 <td class="col-sm-2" th:text="${n.userId}"></td>
                 <td class="col-sm-2">

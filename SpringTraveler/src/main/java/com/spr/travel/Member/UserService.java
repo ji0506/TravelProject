@@ -34,8 +34,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserById(String userId) {
-        return userRepository.findById(userId);
+    public User getUserById(String userId) {
+    	try {
+        	return userRepository.findById(userId).get();			
+		} catch (Exception e) {
+			return null;
+		}
     }
 
     public User createUser(User user) {

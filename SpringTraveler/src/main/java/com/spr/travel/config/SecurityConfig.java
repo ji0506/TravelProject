@@ -56,14 +56,16 @@ public class SecurityConfig implements WebMvcConfigurer {
 						.antMatchers("/css/**", "/images/**", "/js/**", "/main/*.do", "/member/*.do",
 								"/member/join.do", "/products/*.do")
 						.permitAll() // 해당 경로는 인증 없이 접근 가능
-						.antMatchers("/member/test.do") // 해당 경로는 인증이 필요
+						.antMatchers("/member/test.do","/board/qnaWrite.do", "/products/*/reservation") // 해당 경로는 인증이 필요
 						.hasAnyRole("USER", "ADMIN") // ROLE 이 USER,ADMIN 가 포함된 경우에만 인증 가능
 						.antMatchers("/products/new") // 해당 경로는 인증이 필요
 						.hasRole("ADMIN") // ROLE 이 USER,ADMIN 가 포함된 경우에만 인증 가능
 						.and()
 							.formLogin().loginPage("/member/main.do") // 로그인 페이지 설정
 							.loginProcessingUrl("/login-process.do") // 로그인 처리 URL 설정
-							.usernameParameter("userId").passwordParameter("userPwd").defaultSuccessUrl("/main/main.do") // 로그인 성공 후 이동할 페이지
+							.usernameParameter("userId")
+							.passwordParameter("userPwd")
+							.defaultSuccessUrl("/main/main.do") // 로그인 성공 후 이동할 페이지
 							.successHandler(new LoginSuccessHandler()) // 로그인 성공 후 처리할 핸들러
 							.failureUrl("/member/main.do?fail=true") // 로그인 실패시 처리
 							.permitAll()

@@ -53,15 +53,17 @@
 						</tr>
 					</thead>
 					<tbody>
-						<th:block th:each="rProduct, stat : ${product}">
+						<th:block th:each="item, stat : ${list}" th:unless="${#lists.isEmpty(list)}">
 							<tr>
-								<td><span>${rProduct.proName}</span><span> </span><span>/ ${rProduct.proPlan}박 ${rProduct.proPlan+1}일</span></td>
-								<td><a href="reservDetail?product_num=${rProduct.product_num}">[예약상세내역]</a></td>
+								<td><span>[[${item.product.proName}]]</span><span> </span><span>/ [[${item.product.proPlan}]]박 [[${item.product.proPlan+1}]]일</span></td>
+								<td><a th:href="@{reservDetail?proNo={id}(id=${item.proNo})}">[예약상세내역]</a></td>
 							</tr>
 						</th:block>
-						<tr>
-							<td><span>예약하신 상품이 없습니다.</span></td>
-						</tr>
+						<th:block th:if="${#lists.isEmpty(list)}">
+							<tr>
+								<td><span>예약하신 상품이 없습니다.</span></td>
+							</tr>
+						</th:block>
 					</tbody>
 				</table>
 			</div>

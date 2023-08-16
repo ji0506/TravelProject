@@ -3,6 +3,8 @@ package com.spr.travel.domain;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import lombok.Data;
 
 import java.util.Date;
@@ -14,6 +16,7 @@ import java.util.Date;
  */
 @Entity
 @Data
+@DynamicInsert
 public class Qna implements Serializable {
 	private static final long serialVersionUID = 1L;
 

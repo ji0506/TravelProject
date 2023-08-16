@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import lombok.Data;
 
 
@@ -15,6 +17,7 @@ import lombok.Data;
 @Table(name="Categorie")
 @NamedQuery(name="Categorie.findAll", query="SELECT c FROM Categorie c")
 @Data
+@DynamicInsert
 public class Categorie {
 
 	@Id

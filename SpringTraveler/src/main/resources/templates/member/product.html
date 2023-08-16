@@ -42,22 +42,22 @@
 				<h2 class="mb-5">예약 내역 상세 확인</h2>
 				<div class="card mb-4">
 					<div class="card-header">
-						<h3 class="card-title">${product.product_name}</h3>
-						<p class="text-end card-text">여행 기간 : ${departure} ~ ${arrive}</p>
+						<h3 class="card-title">[[${product.proName}]]</h3>
+						<p class="text-end card-text">여행 기간 : [[${#dates.format(product.proDeparture, 'yyyy-MM-dd')}]] ~ [[${#dates.format(product.proArrive, 'yyyy-MM-dd')}]]</p>
 					</div>
 					<div class="card-body">
 						<ul class="list-group">
-							<li class="list-group-item"> 예약자 명 : ${userInfo.member_name}</li>
-							<li class="list-group-item"> 연락처 : ${userInfo.member_phone}</li>
-							<li class="list-group-item"> 이메일 : ${userInfo.member_email}</li>
+							<li class="list-group-item"> 예약자 명 : [[${session.user.userName}]]</li>
+							<li class="list-group-item"> 연락처 : [[${session.user.userCp}]]</li>
+							<li class="list-group-item"> 이메일 : [[${session.user.userEmail}]]</li>
 						</ul>
 					</div>
 					<div class="card-body mb-3">
-						<p class="card-text">항공편 - ${product.product_airplane}</p>
-						<p class="card-text">성인 : ${reservation.rev_adult}명 / ${totalAdult}원</p>
-						<p class="card-text">소인 : ${reservation.rev_minor}명 / ${totalMinor}원</p>
-						<p class="card-text">${product.product_plan}박 ${product.product_plan+1}일</p>
-						<a href="${embassy}" class="card-link" target="_blank">*${product.product_country} 대사관</a>
+						<p class="card-text">항공편 - [[${product.proAirplane}]]</p>
+						<p class="card-text">성인 : [[${reservation.revAdult}]]명 / [[${reservation.revAdult}*${product.proAdult}]]원</p>
+						<p class="card-text">소인 : [[${reservation.revMinor}]]명 / [[${reservation.revMinor}*${product.proMinor}]]원</p>
+						<p class="card-text">[[${product.proPlan}]]박 [[${product.proPlan+1}]]일</p>
+						<a href="${embassy}" class="card-link" target="_blank">*[[${product.proCountry}]] 대사관</a>
 						<p class="card-text">
 							<small class="text-muted">문제가 있으신 부분은 고객센터로 문의해주시길 바랍니다.</small>
 						</p>
@@ -69,12 +69,12 @@
 					</div>
 					<div class="card-body">
 						<div class="tiny-p">
-							${tripInfo.detail_info}
+							[[${tripInfo.detailInfo}]]
 						</div>
 					</div>
 					<div class="card-footer">
 						<button id="deleteBtn" class="btn btn-outline-secondary">예약 취소</button>
-						<input type="hidden" id="product_num" value="${product.product_num}" />
+						<input type="hidden" id="product_num" value="${product.proNo}" />
 					</div>
 				</div>
 			</div>

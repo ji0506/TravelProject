@@ -35,8 +35,8 @@
 				</div>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="checkbox" name="remember-me" id="remember_id">
-<!--				<label class="form-check-label" for="remember_id">자동 로그인</label>-->
+<!--				<input class="form-check-input" type="checkbox" name="remember-me" id="remember_id">
+				<label class="form-check-label" for="remember_id">자동 로그인</label>-->
 			</div>
 		</form>
 	</div>
@@ -44,7 +44,6 @@
 		<button id="joinBtn" type="button" class="btn btn-primary">회원가입</button>
 		<button id="idFinder" type="button" class="btn btn-primary">아이디 찾기</button>
 		<button id="pwFinder" type="button" class="btn btn-primary">비밀번호 찾기</button>
-		<button id="rev_check" type="button" class="btn btn-primary">비회원 예약확인</button>
 	</div>
 </section>
 <script>
@@ -59,7 +58,7 @@
 		}
 		
 	document.querySelector('#joinBtn').addEventListener('click', () => {
-		location.href = 'join';
+		location.href = 'join.do';
 	});
 
 	var errMsg = $('#errMsg').val();
@@ -68,17 +67,7 @@
 		$('#formContent').find('#userID').focus();
 	}
 
-	$("#idFinder").click(function () {
-		location.href = 'id_find';
-	});
 
-	$("#pwFinder").click(function () {
-		location.href = 'pw_find';
-	});
-
-	$("#rev_check").click(function () {
-		location.href = 'rev_check';
-	});
 
 		
 	});

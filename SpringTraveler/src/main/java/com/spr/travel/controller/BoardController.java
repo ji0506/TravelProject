@@ -133,4 +133,29 @@ public class BoardController {
 	}
 
 	
+	@GetMapping("/noticeDetail.do") //새글 작성 페이지 get 요청
+	public String noticeDetail( Model model, @RequestParam("notiNo") int notiNo) throws Exception {
+	
+		Notice list = bs.getByNoticeId(notiNo);
+
+		//공지사항 목록을 모델에 추가하여 전달
+		model.addAttribute("info", list);
+		
+		return "board/noticeDetail";// 새글 페이지로 이동
+	}
+	
+	
+	@GetMapping("/boardDetail.do") //새글 작성 페이지 get 요청
+	public String boardDetail( Model model, @RequestParam("brdNo") int brdNo) throws Exception {
+	
+		Board list = bs.getByBoardId(brdNo);
+
+		//공지사항 목록을 모델에 추가하여 전달
+		model.addAttribute("info", list);
+		
+		return "board/noticeDetail";// 새글 페이지로 이동
+	}
+	
+	
+	
 }

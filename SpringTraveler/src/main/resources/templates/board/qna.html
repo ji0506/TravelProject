@@ -73,18 +73,15 @@
 					<th:block th:if="${qnaList != null}">
 						<th:block th:each="q, n : ${qnaList}">
 							<tr>
-								<!--<th:block th:if="${q.qna_answer == null}">
-									<td id="1" class="col-sm-1">확인중</td>
-								</th:block>
-								<th:block th:if="${q.qna_answer != null}">
 									<td id="2" class="col-sm-1">답변완료</td>
+<!--								<th:block th:if="${q.qna_answer != null}">
 								</th:block>-->
 								<th:block th:if="${q.userId == session.user.userId  }">
 									<td id="qnaTitle" class="col-sm-6">
 										<a th:href="@{/board/qnaDetail}" th:attr="href='/board/qnaDetail?qna_num=' + ${q.qnaNo}" th:text="${q.qnaTitle}"></a>
 									</td>
 								</th:block>
-								<th:block th:if="${q.userId == session.user.userId  }">
+								<th:block th:unless="${q.userId == session.user.userId  }">
 									<td class="col-sm-6">작성자 외에는 확인할수 없습니다.</td>
 								</th:block>
 								<td id="qnaWriter" class="col-sm-2">
@@ -106,7 +103,7 @@
 			</div>
 			<div class="mb-4 text-end">
 				<button type="button" class="btn btn-outline-secondary" id="addBtn">글쓰기</button>
-				<button type="button" class="btn btn-outline-secondary" id="myQNA">나의 질문</button>
+<!--				<button type="button" class="btn btn-outline-secondary" id="myQNA">나의 질문</button>-->
 			</div>
 		</div>
 	</div>

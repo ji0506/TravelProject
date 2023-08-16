@@ -24,5 +24,10 @@ public class ReserService {
         return reserRepository.findByProNo(proNo);
     };
 
-	
+
+    
+    public Reservation getReservationOfMember(int proNo){
+        return reserRepository.findByProNo(proNo);
+    };
+
 }

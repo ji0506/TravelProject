@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Date;
@@ -13,6 +15,7 @@ import java.util.Date;
 @Entity
 @Data
 @Table(name ="user")
+@DynamicInsert
 public class User {
 
 	@Id

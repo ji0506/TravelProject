@@ -13,7 +13,7 @@
 <section class="container">
     <div class="row">
         <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
-            <form id="reserveForm" th:action="@{/products/${product.proNo}}" method="POST">
+            <form id="reserveForm" th:action="@{/products/{id}(id=${product.proNo})}" method="POST">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <div class="card mb-3">
                     <div class="card-header">
@@ -458,7 +458,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="inputEmail">이메일</label>
-                            <input required="required" type="text" class="form-control" id="inputEmail" th:value="${session.user.userEmail}" name="rev_email">
+                            <input required="required" type="text" class="form-control" id="inputEmail" th:value="${session.user.userEmail}" name="revEmail">
                         </div>
                         <input type="hidden" id="inputMemberId" name="userId" th:value="${session.user.userId}">
                         <div class="text-center">

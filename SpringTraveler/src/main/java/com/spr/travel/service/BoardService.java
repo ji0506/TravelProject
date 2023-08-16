@@ -49,6 +49,15 @@ public class BoardService {
 		noticeRepository.save(noti);
 	}
 
+	
+	public Notice getByNoticeId(int id) throws Exception {
+		return noticeRepository.findById(id).get();
+	}
 
+	public Board getByBoardId(int id) throws Exception {
+		return BoardRepository.findById(id).get();
+	}
+
+	
 
 }

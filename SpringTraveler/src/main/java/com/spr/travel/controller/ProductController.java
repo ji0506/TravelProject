@@ -110,8 +110,8 @@ public class ProductController {
 				return "redirect:/member/rev_check";
 			}
 		} else {
-			rttr.addFlashAttribute("flashMessage", "예약 중 오류가 발생하였습니다.");
-			return "redirect:/products/reserve";
+//			rttr.addFlashAttribute("flashMessage", "예약 중 오류가 발생하였습니다.");
+			return "redirect:/member/myPage";
 		}
 	}
 	

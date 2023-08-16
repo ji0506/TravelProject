@@ -32,24 +32,25 @@
       <h2 class="mb-4">공지사항</h2>
       <div class="card mb-5">
         <div class="card-header">
-          <th:block th:if="${userInfo.member_master eq 'Y'}">
-            <button id="delBtn" type="button" class="btn-close float-end" data-bs-toggle="modal"
-                    data-bs-target="#staticBackdrop" th:onclick="|setNum(${notice.notice_num})|"
-                    data-what="${notice.notice_num}"></button>
-          </th:block>
-          <h3 class="card-title" th:text="${notice.notice_title}"></h3>
+			<th:block sec:authorize="isAuthenticated()" class="nav-item">
+	          <th:block th:if="${session.user.userTypeCd == '01'}">
+    	        <button id="delBtn" type="button" class="btn-close float-end" data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop" th:onclick="|setNum(${notice.notiNo})|"
+                    data-what="${info.notiNo}"></button>
+    			</th:block>
+		    </th:block>
+          <h3 class="card-title" th:text="${info.title}"></h3>
           <p class="card-text text-muted d-inline"
-             th:text="|작성자: ${notice.notice_writer}|"></p><br />
+             th:text="|작성자: ${info.userId}|"></p><br />
           <p class="card-text text-muted d-inline">
-            작성일: <span th:text="${#dates.format(notice.notice_regdate, 'yyyy/MM/dd')}"></span>
+            작성일: <span th:text="${#dates.format(info.regDate, 'yyyy/MM/dd')}"></span>
           </p>
         </div>
         <div class="card-body">
-          <p class="catd-text" th:text="${notice.notice_content}"></p>
+          <p class="catd-text" th:text="${info.content}"></p>
 
           <form name="noticeInfo" action="noticeDelete" method="POST">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <input type="hidden" th:name="notice_num" th:value="${notice.notice_num}" />
+            <input type="hidden" th:name="notiNo" th:value="${info.notiNo}" />
           </form>
           <th:block th:if="${files}">
             <div class="card-footer">
