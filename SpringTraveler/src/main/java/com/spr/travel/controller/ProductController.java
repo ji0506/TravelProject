@@ -31,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spr.travel.domain.Product;
 import com.spr.travel.domain.ProductDetail;
+import com.spr.travel.domain.Reservation;
 import com.spr.travel.domain.SearchForm;
 import com.spr.travel.domain.User;
 import com.spr.travel.service.DetailService;
@@ -89,6 +90,32 @@ public class ProductController {
         return "products/detail";
     }
 
+	@PostMapping("/{id}")
+	public String reservation(HttpSession session, @PathVariable int id, Reservation rvo, RedirectAttributes rttr) {
+		User loginMember = (User) session.getAttribute("user");
+		if (loginMember != null && !loginMember.getUserId().equals(rvo.getUserId())) {
+			rttr.addFlashAttribute("flashMessage", "비정상적인 접근입니다.");
+			return "redirect:/";
+		}
+		rvo.setProNo(id);
+		int result = productService.reserve(rvo);
+		if (result > 0) {
+			rttr.addFlashAttribute("flashMessage", "예약이 완료되었습니다.");
+			if (loginMember != null) {
+				return "redirect:/member/myPage";
+			} else {
+///				rttr.addFlashAttribute("rev_name", rvo.getRev_name());
+///				rttr.addFlashAttribute("rev_email", rvo.getRev_email());
+//				rttr.addFlashAttribute("rev_phone", rvo.getRev_phone());
+				return "redirect:/member/rev_check";
+			}
+		} else {
+			rttr.addFlashAttribute("flashMessage", "예약 중 오류가 발생하였습니다.");
+			return "redirect:/products/reserve";
+		}
+	}
+	
+    
     @GetMapping("/new") // 새글 작성 관리자만 사용 가능
     public String renderNewForm() {
 
@@ -130,7 +157,7 @@ public class ProductController {
         return list;
     }
 
-       @GetMapping("/{id}/reservation") // 예약 페이지
+    @GetMapping("/{id}/reservation") // 예약 페이지
     public String renderReservationForm(@PathVariable int id, Model model, HttpSession session, RedirectAttributes rttr) {
         User loginMember = (User) session.getAttribute("user");/*"userInfo"*/
         if (loginMember != null) {
@@ -150,14 +177,15 @@ public class ProductController {
         return "products/update";
     }
 
-    @PostMapping("/{id}/delete") // 삭제 페이지 관리자만 사용 가능
+    @GetMapping("/{id}/delete") // 삭제 페이지 관리자만 사용 가능
     public String deleteProduct(@PathVariable int id, RedirectAttributes rttr) throws Exception {
         String redirectUrl = "redirect:/products/"; // 삭제 완료 후 경로
+
         detailService.deleteFileById(id);
         int result = productService.deleteProduct(id);
         if (result > 0) {
             rttr.addFlashAttribute("flashMessage", "정상적으로 삭제가 완료되었습니다.");
-            return redirectUrl;
+            return "redirect:/main/main.do";
         } else {
             rttr.addFlashAttribute("flashMessage", "삭제 중 오류가 발생하였습니다.");
             return redirectUrl + id;

@@ -108,12 +108,11 @@ public class BoardController {
 
 		//공지사항 목록을 모델에 추가하여 전달
 		model.addAttribute("noticeList", list);
+
 		return "board/notice"; // 공지사항 페이지로 이동
 	}
 	@GetMapping("/noticeWrite.do") //새글 작성 페이지 get 요청
 	public String noticeWrite( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-
 		return "board/noticeWrite";// 새글 페이지로 이동
 	}
 	@PostMapping("/noticeWrite.do") // 새글 페이지 post 요청

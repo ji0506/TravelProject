@@ -33,6 +33,13 @@ public class Reservation {
 	@Column(length=50)
 	private String revPhone;
 
+	@Column(length=50)
+	private String revBirth;
+
+	@Column(length=50)
+	private String revEmail;
+
+	
 
 	@Column(length=11)
 	private int revAdult;

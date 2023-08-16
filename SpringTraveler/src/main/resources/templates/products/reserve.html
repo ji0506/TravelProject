@@ -13,7 +13,7 @@
 <section class="container">
     <div class="row">
         <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
-            <form id="reserveForm" th:action="@{products/${product.proNo}}" method="POST">
+            <form id="reserveForm" th:action="@{/products/${product.proNo}}" method="POST">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <div class="card mb-3">
                     <div class="card-header">
@@ -32,9 +32,9 @@
                             <div class="col">
                                 <span class="fs-6 badge text-bg-danger me-2 p-2">잔여좌석</span>
                                 <span class="card-text d-inline-block">[[${product.proSeat}]]</span>
-                                <c:if test="${product.product_seat <= 5}">
+                                <th:block th:if="${product.proSeat <= 5}">
                                     <span class="ms-2 badge text-bg-danger">마감 임박</span>
-                                </c:if>
+                                </th:block>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -446,21 +446,21 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="inputName">이름</label>
-                            <input required="required" type="text" class="form-control" id="inputName" th:value="${setion.user.userName}" name="revName;">
+                            <input required="required" type="text" class="form-control" id="inputName" th:value="${session.user.userName}" name="revName">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="inputBirth">생년월일</label>
-                            <input required="required" type="text" class="form-control" id="inputBirth" th:value="${user.userBirth}" name="rev_birth">
+                            <input required="required" type="text" class="form-control" id="inputBirth" th:value="${session.user.userBirth}" name="revBirth">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="inputPhone">핸드폰</label>
-                            <input required="required" type="text" class="form-control" id="inputPhone" th:value="${user.userCp}" name="revPhone;">
+                            <input required="required" type="text" class="form-control" id="inputPhone" th:value="${session.user.userCp}" name="revPhone">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="inputEmail">이메일</label>
-                            <input required="required" type="text" class="form-control" id="inputEmail" th:value="${user.userEmail}" name="rev_email">
+                            <input required="required" type="text" class="form-control" id="inputEmail" th:value="${session.user.userEmail}" name="rev_email">
                         </div>
-                        <input type="hidden" id="inputMemberId" name="userId" th:value="${user.userId}">
+                        <input type="hidden" id="inputMemberId" name="userId" th:value="${session.user.userId}">
                         <div class="text-center">
                             <button id="reserveBtn" class="btn btn-primary">예약확정</button>
                             <button class="btn btn-danger">취소</button>
@@ -474,6 +474,7 @@
 <div th:insert="~{/common/footer}"></div>
 </body>
 <script src="/js/jquery.js"/>
+<script>
 	$("#reserveBtn").click(function (e) {
 		e.preventDefault();
 		if (!$("#flexCheckDefault").is(":checked")) {

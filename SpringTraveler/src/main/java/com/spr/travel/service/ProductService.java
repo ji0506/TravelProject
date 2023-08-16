@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.spr.travel.domain.Product;
+import com.spr.travel.domain.Reservation;
 import com.spr.travel.domain.SearchForm;
 import com.spr.travel.repository.ProductRepository;
+import com.spr.travel.repository.ReserRepository;
 
 @Service
 public class ProductService {
@@ -17,6 +19,10 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository ;
 
+	@Autowired
+	private ReserRepository reserRepository ;
+
+	
 	public List<Product> getProductList(){ // 상품 테이블에 있는 모든 정보 찾기
 		return productRepository.findAll();
 	}
@@ -63,6 +69,13 @@ public class ProductService {
 	public int deleteProduct(int id){ // DB에 등록된 상품 id를 이용하여 상품 삭제하기
 			productRepository.deleteById(id);
 		return 1;
+	}
+
+
+	public int reserve(Reservation rvo) {
+		// TODO Auto-generated method stub
+		reserRepository.save(rvo);
+		return 0;
 	}
 
 }
