@@ -16,10 +16,13 @@ public class ReserService {
 	@Autowired
 	private ReserRepository reserRepository;
 	
-	
-
 	public List<Reservation> getReserList(User user){
 		return reserRepository.findByUserId(user.getUserId());
 	}
+	
+    public Reservation getReservationOfMember(String userId, int proNo){
+        return reserRepository.findByProNo(proNo);
+    };
+
 	
 }

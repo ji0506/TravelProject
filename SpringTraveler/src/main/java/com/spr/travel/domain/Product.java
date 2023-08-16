@@ -60,7 +60,6 @@ public class Product {
 	@Column(length=4)
 	private int proSeat;
 	
-
 	@OneToOne
 	@JoinColumn(name = "proNo", insertable = false, updatable = false)
 	@JsonIgnore

@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +35,8 @@ import com.spr.travel.domain.SearchForm;
 import com.spr.travel.domain.User;
 import com.spr.travel.service.DetailService;
 import com.spr.travel.service.ProductService;
-import com.spr.travel.service.ReservationService;
+import com.spr.travel.service.ReserService;
+
 import net.coobird.thumbnailator.Thumbnailator;
 
 @Controller
@@ -48,7 +48,7 @@ public class ProductController {
     @Autowired
     private DetailService detailService;
     @Autowired
-    private ReservationService reservationService;
+    private ReserService reservationService;
  
 	private String filePath = "C:/upload";
    
@@ -108,7 +108,7 @@ public class ProductController {
         productService.saveListByNew(product); // 입력된 데이터를 상품 테이블에 저장
         detail.setProNo(product.getProNo()); // 상품 테이블에서 id를 찾아 상세 테이블에 세팅하기
         detailService.saveListByNew(detail); // 입력된 데이터와 세팅된 id를 상세 테이블에 저장
-        fileUpload(detail,uploadFile);
+        fileUpload(detail,uploadFile);	// 파일 저장
         
         return "redirect:/products/" + product.getProNo();
     }
@@ -163,7 +163,7 @@ public class ProductController {
             return redirectUrl + id;
         }
     }
-
+    
 	private String fileUpload(ProductDetail detail, MultipartFile[] uploadFile) {
 		String uploadFolder = filePath + "/site";
 
@@ -176,12 +176,8 @@ public class ProductController {
 		if (uploadPath.exists() == false) { // 해당 상품 폴더가 없으면
 			uploadPath.mkdirs(); // 해당 경로에 폴더를 만든다.
 		}
-		// make gno folder
 
 		for (MultipartFile multipartFile : uploadFile) {
-
-			int i = 1;
-
 			String uploadFileName = multipartFile.getOriginalFilename();
 
 			// IE has file path
@@ -198,12 +194,9 @@ public class ProductController {
 				File saveFile = new File(uploadPath, uploadFileName); // c:upload/main/{상품 번호 폴더}/파일 이름으로 최종 경로 생성
 				multipartFile.transferTo(saveFile); // 파일을 최종 경로로 이동
 
-//				detail.setUuid(uploadFileName);
 				detail.setDetailImage("/" + uploadFileName);
 				
 				detailService.updateFilePath(detail);
-//				list.add(goods);
-
 				// 만일 이미지 타입이라면 섬네일을 생성하도록 한다.
 				// check image type file
 				if (checkImageType(saveFile)) {
@@ -211,19 +204,14 @@ public class ProductController {
 					// File 클래스는 파일과 디렉터리를 다룸. 그래서 File 인스턴스는 파일일 수도 있고 디렉터리 일수도 있다.
 					// File(String parent, String child) - parent 폴더 경로의 child라는 파일에 대한 File 객체 생성
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
-
 					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
-
 					thumbnail.close();
-
-	//				goods.setUuid(uuid.toString());	
 				}
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			} // end catch
 		} // end for
-
 		
 		return null;
 	}

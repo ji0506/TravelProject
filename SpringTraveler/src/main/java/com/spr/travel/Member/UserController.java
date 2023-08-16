@@ -92,8 +92,43 @@ public class UserController {
 
 		return "redirect:/member/main.do";
 	}
-
-
+	
+	// 관리자 페이지 이동
+	@GetMapping("/adminPage")
+	public String adminPage(Model model,HttpServletRequest request) throws Exception{
+		String type = request.getParameter("type");
+		System.out.println(type);
+	/*	if(type != null) {
+			if(type.equals("회원")) {
+				String member_master = "N";
+				List<Reservatio> rev = res.allRev();
+				List<MemberVO> list = ms.typeMemberList(cri,member_master);
+				PageMaker pm = ms.typePageMaker(cri,member_master);
+				
+				model.addAttribute("rev",rev);
+				model.addAttribute("list",list);
+				model.addAttribute("pm",pm);
+				return "admin/index";
+			}else {
+				String member_master = "Y";
+				List<User> list = ms.typeMemberList();
+//				PageMaker pm = ms.typePageMaker(cri,member_master);
+				
+				model.addAttribute("list",list);
+				model.addAttribute("pm",pm);
+				return "admin/index";
+			}
+		}*/
+		List<User> list = userService.memberList();
+		List<Reservation> rev = userService.allRev();
+		
+//		PageMaker pm  = ms.pageMaker(cri);
+		
+		model.addAttribute("rev",rev);
+		model.addAttribute("list",list);
+//		model.addAttribute("pm",pm);
+		return "admin/index";
+	}
 
 	public String sha256Hash(String input) {
 		try {

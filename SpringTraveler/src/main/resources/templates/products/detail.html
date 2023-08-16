@@ -46,7 +46,7 @@
         <div class="col-lg-6">
             <div class="card mb-3">
 <!--                <img th:src="@{${detail.detailImage.replace('s_','')}}" class="card-img-top" alt="..."> -->
-                <img th:src="@{${detail.detailImage}}" class="card-img-top" alt="..."> 
+                <img th:src="@{/upload/site/{id}{img}(id=${detail.proNo},img=${detail.detailImage})}" class="card-img-top" alt="..."> 
             </div>
         </div>
         <div class="col-lg-6">
