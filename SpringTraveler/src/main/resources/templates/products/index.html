@@ -7,6 +7,7 @@
 	<link rel="stylesheet" th:href="@{/bootstrap-5.2.0-dist/css/bootstrap.min.css}">
 	<link rel="stylesheet" th:href="@{/css/btn-primary.css}">
 	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/product.index.css}">
 
 </head>
 
@@ -96,32 +97,26 @@
 				<div class="card-header ">
 					<h3 class="fs-5 card-title text-center m-0">[[${continent}]]</h3>
 				</div>
-				<c:set let="countryNum" value="1" />
-				<c:forEach var="country" products="${countrySet}">
+				<th:block th:each="country, countryNum : ${countrySet}" th:if="${#lists.isEmpty(countrySet)}">
 					<div class="accordion" id="accordion">
 						<div class="accordion-product">
-							<h4 class="accordion-header" id="heading${countryNum}">
-								<button class="accordion-button <c:if test='${countryNum != 1}'>collapsed</c:if>"
-									type="button" data-bs-toggle="collapse" data-bs-target="#collapse${countryNum}"
-									aria-expanded="true" aria-controls="collapse${countryNum}">
+							<h4 class="accordion-header" th:id="heading${countryNum.index}">
+								<button class="accordion-button" th:classappend="${countryNum.index != 1} ? 'collapsed'"
+									type="button" data-bs-toggle="collapse" th:data-bs-target="#collapse${countryNum.index}"
+									aria-expanded="true" th:aria-controls="collapse${countryNum}">
 									[[${country}]]
 								</button>
 							</h4>
-							<!--          <div id="collapse${countryNum}" class="accordion-collapse collapse <c:if test='${countryNum == 1}'>show</c:if>" aria-labelledby="heading${countryNum}">
-           <c:forEach var="city" products="${cityMap.get(country)}">
-              <th:block th:each="city, stat : ${list}" th:if="${product.proCountry == country}">
-                  <div class="accordion-body" data-city="${city}">
-                      [[${city}]]
-                  </div>
-              </th:block>
-            </c:forEach>
-          </div>-->
+<!--							<div th:id="collapse${countryNum.index}" class="accordion-collapse collapse"  th:classappend="${countryNum == 1} ? 'show'" th:aria-labelledby="heading${countryNum.index}">
+					        	<th:block th:each="city : ${cityMap[__${country}__]" th:if="${product.proCountry == country}">
+					            	<div class="accordion-body" th:data-city="${city}">
+					            		[[${city}]]
+									</div>
+								</th:block>-->
+					      	</div>
 						</div>
 					</div>
-					<c:set let="countryNum" value="${countryNum + 1}" />
-				</c:forEach>
-			</div>
-			</div>
+				</th:block>
 			</div>
 		</section>
 	</th:block>

@@ -5,8 +5,8 @@
     <title>최고의 여행 - 대탈출</title>
     <link rel="stylesheet" th:href="@{/bootstrap-5.2.0-dist/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/btn-primary.css}">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-
+    <link rel="stylesheet" th:href="@{/css/detail.css}">
+    <link rel="stylesheet" th:href="@{/css/tiny.css}">
 </head>
 
 <body class="d-flex flex-column vh-100">
@@ -28,7 +28,7 @@
 <section class="container mb-3">
     <div class="row mb-3 pt-1">
         <div class="aWrap ps-3">
-            <a href="${contextPath}">
+            <a href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
                     <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
@@ -100,15 +100,15 @@
             </div>
             <div class="row mb-3">
                 <div class="col d-flex justify-content-around">
-                   <!-- <th:block sec:authorize="anonymous">-->
+                    <th:block sec:authorize="isAuthenticated()">
                         <a th:href="@{${'/products/' + product.proNo + '/reservation'}}" class="btn btn-primary" id="reserveBtn">예약하기</a>
                         <a th:href="@{../board/faq.do}" class="btn btn-primary" id="qnaBtn">문의하기</a>
-                    <!--</th:block>-->
-                    <!--<th:block sec:authorize="hasRole('ROLE_USER')">-->
-                    <a th:href="@{${'/products/' + product.proNo + '/reservation'}}" class="btn btn-primary" id="reserveBtn">예약하기</a>
+                    </th:block>
+                    <th:block sec:authorize="hasRole('ROLE_USER')">
+                    	<a th:href="@{${'/products/' + product.proNo + '/reservation'}}" class="btn btn-primary" id="reserveBtn">예약하기</a>
                         <a th:href="@{board/faq}" class="btn btn-primary" id="qnaBtn">문의하기</a>
-                   <!-- </th:block>-->
-                    <!--<th:block sec:authorize="hasRole('ROLE_ADMIN')">-->
+                   	</th:block>
+                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                         <a th:href="@{${'/products/' + product.proNo + '/update'}}" class="btn btn-primary" id="reserveBtn">수정</a>
                         <!--<a th:href="@{products/${product.proNo}/update}" class="btn btn-primary" id="reserveBtn">상품 수정</a>-->
                         <a id="deleteBtn" th:href="@{${'/products/' + product.proNo + '/delete'}}" class="btn btn-primary">상품 삭제</a>
@@ -116,7 +116,7 @@
                         <form id="deleteForm" class="d-none">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         </form>
-                    <!--</th:block>-->
+                    </th:block>
                 </div>
             </div>
         </div>

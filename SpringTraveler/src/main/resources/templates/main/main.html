@@ -117,10 +117,10 @@
 			<th:block th:each="item, stat : ${list}" th:if="${stat.index} &lt; 8">
 				<div class="col-md-6 col-xl-3">
 					<div class="card border-0 mx-auto" style="width: 18rem;">
-						<th:block th:if="${1 == katTargetNo}" class="active">
-							<img src="${contextPath}/attach${item.detail_title_image}" class="card-img-top" alt="...">
+						<th:block th:if="${null != item.detail.detailImage}" class="active">
+							<img th:src="${item.detail.detailImage}" class="card-img-top" alt="...">
 						</th:block>
-						<th:block th:unless="${1 == katTargetNo}">
+						<th:block th:unless="${null != item.detail.detailImage}">
 							<img src="https://source.unsplash.com/random" class="card-img-top" alt="...">
 						</th:block>
 	
