@@ -57,7 +57,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 						.antMatchers("/css/**", "/images/**", "/js/**", "/main/*.do", "/member/*.do",
 								"/member/join.do", "/products/*.do")
 						.permitAll() // 해당 경로는 인증 없이 접근 가능
-						.antMatchers("/member/test.do","/board/qnaWrite.do", "/products/*/reservation") // 해당 경로는 인증이 필요
+						.antMatchers("/member/test.do","/board/qnaWrite.do") // 해당 경로는 인증이 필요
 						.hasAnyRole("USER", "ADMIN") // ROLE 이 USER,ADMIN 가 포함된 경우에만 인증 가능
 						.antMatchers("/products/new") // 해당 경로는 인증이 필요
 						.hasRole("ADMIN") // ROLE 이 USER,ADMIN 가 포함된 경우에만 인증 가능

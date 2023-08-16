@@ -5,15 +5,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import com.spr.travel.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -47,14 +46,16 @@ public class UserController {
 
 	@Autowired
 	private JavaMailSender mailSender;
-	
-	
-	
+
+	@Autowired
+	private EmailService emailService;
+
+
 	@RequestMapping("/main.do")
-	public String list() {	
+	public String list() {
 		return "member/login2";
 	}
-	
+
 	// (회원)마이페이지 출력-예약내역
 	@GetMapping("/myPage")
 	@Transactional
@@ -98,8 +99,8 @@ public class UserController {
 	@RequestMapping("/save.do")
 	public String save(User user) {
 
-		user.setUserPwd(sha256Hash(user.getUserPwd()));
-		userService.createUser(user);
+		user.setUserPwd(sha256Hash(user.getUserPwd()));// 비밀번호 암호화
+		userService.createUser(user);		//저장
 
 		return "redirect:/member/main.do";
 	}
@@ -142,21 +143,15 @@ public class UserController {
 	}
 	
 	@GetMapping("/reservDetail")
-	@Transactional
 	public String reservDetail(Product vo,HttpSession session,Model model)throws Exception{
-		User loginMember = (User) session.getAttribute("user");
-		Reservation reserv = reserService.getReservationOfMember(loginMember.getUserId(),vo.getProNo());
-//		Detail tripInfo = ms.findtripInfo(vo.getProNo());
+		User loginMember = (User) session.getAttribute("user");				// 유저 정보 세팅
+		Reservation reserv = reserService.getReservationOfMember(loginMember.getUserId(),vo.getProNo()); //예약정보 불러오기
+
+		Product product = productService.getProductById(vo.getProNo());	//상품 정보 불러오기
 		
-		Product product = productService.getProductById(vo.getProNo());
-		
-//		String embassy = url.findEmbassy(product.getProduct_country());
-//		System.out.println(embassy);
-		
-//		model.addAttribute("embassy",embassy);
-		model.addAttribute("product",product);
-		model.addAttribute("reservation",reserv);
-		model.addAttribute("tripInfo",product.getDetail());
+		model.addAttribute("product",product);	//상품 정보 세팅
+		model.addAttribute("reservation",reserv);	// 예약정보 세팅
+		model.addAttribute("tripInfo",product.getDetail()); // 상품 상세정보 세팅
 		
 		return "member/product";
 	}
@@ -166,7 +161,7 @@ public class UserController {
 	@ResponseBody
 	public int idCheck(ModelMap model,HttpServletRequest request, @RequestParam("userId") String userID){
 		int result = -1;
-		if(userService.getUserById(userID) !=null) {
+		if(userService.getUserById(userID) !=null) {		// 아이디 체크
 			result = 1;
 		}else {
 			result = 0;
@@ -194,7 +189,7 @@ public class UserController {
 	@PostMapping("findInfo")
 	@ResponseBody
 	public User findId(User vo) {
-		User findMember = userService.getUserById(vo.getUserId());
+		User findMember = userService.getUserByEmail(vo.getUserEmail());
 		
 		return findMember;
 
@@ -208,26 +203,16 @@ public class UserController {
 		System.out.println(email);
 		String code = "";
 		for(int i=0; i<5;i++) {
-			code +=(int)(Math.random()*10);
+			code +=(int)(Math.random()*10);			// 5자리 랜덤 코드 생성
 		}
 		try {
 
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message,"UTF-8");
-			helper.setFrom("test@test.com");
-			helper.setTo(email);
-			helper.setSubject("인증 메일입니다.");
-			helper.setText("인증 코드 : <h3>["+code+"]</h3>",true);
-			mailSender.send(message);
+			emailService.sendSimpleMessage(email,"인증 메일입니다.","인증 코드 : <h3>["+code+"]</h3>"); // 메일 발송
 			System.out.println("발신 완료");
-
-			
 		}catch (Exception e) {
-			e.getStackTrace();
+			e.printStackTrace();
 		}
-		
-		
-		
+
 		return code;
 	}
 

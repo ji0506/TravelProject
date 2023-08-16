@@ -102,11 +102,7 @@
             </div>
             <div class="row mb-3">
                 <div class="col d-flex justify-content-around">
-                    <th:block sec:authorize="isAuthenticated()">
-                        <a th:href="@{${'/products/' + product.proNo + '/reservation'}}" class="btn btn-primary" id="reserveBtn">예약하기</a>
-                        <a th:href="@{../board/faq.do}" class="btn btn-primary" id="qnaBtn">문의하기</a>
-                    </th:block>
-                    <th:block sec:authorize="hasRole('ROLE_USER')">
+                    <th:block sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
                     	<a th:href="@{${'/products/' + product.proNo + '/reservation'}}" class="btn btn-primary" id="reserveBtn">예약하기</a>
                         <a th:href="@{board/faq}" class="btn btn-primary" id="qnaBtn">문의하기</a>
                    	</th:block>
@@ -127,13 +123,13 @@
         <div class="card mb-3">
             <div class="card-body border-bottom tiny-p">
                 <h3 class="card-title m-0 fs-5 mb-3">상품 설명</h3>
-                [[${detail.detailInfo}]]
+                <div th:utext="${detail.detailInfo}"></div>
             </div>
         </div>
         <div class="card mb-3">
             <div class="card-body tiny-p">
                 <h3 class="card-title m-0 fs-5 mb-3">상세 일정</h3>
-                [[${detail.schedule}]]
+                <div th:utext="${detail.schedule}"></div>
             </div>
         </div>
     </div>

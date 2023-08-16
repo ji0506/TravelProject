@@ -126,11 +126,9 @@
 		// 인증 메일에 발송된 코드 저장
 		// 아이디 찾기용
 		var emailCode = "";
-		$("#acceptEmail").click(
+		$("#acceptEmail").click(			// 버튼 클릭시
 			function () {
-				if ($("#member_email").val() == ""
-					|| $("#member_email").val() == undefined
-					|| $("#member_email").val() == null) {
+				if ($("#member_email").val() == "" || $("#member_email").val() == undefined || $("#member_email").val() == null) {
 					alert('이메일을 입력해주세요');
 					return;
 				}
@@ -170,13 +168,14 @@
 					type: "POST",
 					dataType: "json",
 					data: {
-						"member_email": $("#member_email").val()
+						"userEmail": $("#member_email").val()
 					},
 					success: function (data) {
+						alert("bbb");
 						if (data) {
 							alert('해당하는 아이디를 찾았습니다.');
 							$("#idFinder").show();
-							$("#sendIds").attr("value", data.member_id);
+							$("#sendIds").attr("value", data.userId);
 						} else {
 							alert('해당 이메일은 등록되지않은 이메일 입니다. 가입하실때 입력하신 이메일을 입력해주세요.');
 						}
@@ -255,8 +254,8 @@
 							console.log(data);
 							$("#idFinder").show();
 							$("#pwFinder").show();
-							$("#sendId").attr("value", data.member_id);
-							$("#sendPw").attr("value", data.member_pw);
+							$("#sendId").attr("value", data.userId);
+							$("#sendPw").attr("value", data.userPwd);
 						} else {
 							alert('해당 이메일은 등록되지않은 이메일 입니다. 가입하실때 입력하신 이메일을 입력해주세요.');
 						}

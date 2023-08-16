@@ -69,11 +69,11 @@ public class ProductController {
         if (search.getCountry() == "" && search.getDeparture() == "" && search.getPlan() == "" && search.getSeat() == "" && search.getCity() == "" ) {
             return "redirect:/products/index";
         }
-        List<Product> list = productService.productSearch(search);
+        //List<Product> list = productService.productSearch(search);
         
-        model.addAttribute("list", list);
+       // model.addAttribute("list", list);
 
-        listSplitAndAdd(model, list);
+        //listSplitAndAdd(model, list);
         return "/products/index";
     }
 
@@ -85,34 +85,17 @@ public class ProductController {
 
         if (detail == null) return "products/index"; // 상세 정보가 없으면 목록창으로 이동
         model.addAttribute("detail", detail); // 상세 테이블의 데이터를 출력
-        model.addAttribute("product", product1);
+        model.addAttribute("product", product1);  // 상품 테이블의 데이터 출력
 
         return "products/detail";
     }
 
 	@PostMapping("/{id}")
 	public String reservation(HttpSession session, @PathVariable int id, Reservation rvo, RedirectAttributes rttr) {
-		User loginMember = (User) session.getAttribute("user");
-		if (loginMember != null && !loginMember.getUserId().equals(rvo.getUserId())) {
-			rttr.addFlashAttribute("flashMessage", "비정상적인 접근입니다.");
-			return "redirect:/";
-		}
-		rvo.setProNo(id);
-		int result = productService.reserve(rvo);
-		if (result > 0) {
-			rttr.addFlashAttribute("flashMessage", "예약이 완료되었습니다.");
-			if (loginMember != null) {
-				return "redirect:/member/myPage";
-			} else {
-///				rttr.addFlashAttribute("rev_name", rvo.getRev_name());
-///				rttr.addFlashAttribute("rev_email", rvo.getRev_email());
-//				rttr.addFlashAttribute("rev_phone", rvo.getRev_phone());
-				return "redirect:/member/rev_check";
-			}
-		} else {
-//			rttr.addFlashAttribute("flashMessage", "예약 중 오류가 발생하였습니다.");
-			return "redirect:/member/myPage";
-		}
+		User loginMember = (User) session.getAttribute("user"); // 세션 정보 읽기
+		rvo.setProNo(id);     //상품 id 세팅
+		int result = productService.reserve(rvo);   // 예약정보 저장
+        return "redirect:/member/myPage"; // 예약 정보 페이지로
 	}
 	
     
@@ -159,14 +142,14 @@ public class ProductController {
 
     @GetMapping("/{id}/reservation") // 예약 페이지
     public String renderReservationForm(@PathVariable int id, Model model, HttpSession session, RedirectAttributes rttr) {
-        User loginMember = (User) session.getAttribute("user");/*"userInfo"*/
-        if (loginMember != null) {
+        User loginMember = (User) session.getAttribute("user"); // 세션 정보 읽기
+        if (loginMember != null) {  //이미 예약시 예외처리
             if (reservationService.getReservationOfMember(loginMember.getUserId(), id) != null) {
                 rttr.addFlashAttribute("flashMessage", "이미 예약하신 상품입니다.");
                 return "redirect:/products/" + id;
             }
         }
-        model.addAttribute("product", productService.getProductById(id));
+        model.addAttribute("product", productService.getProductById(id));   // product 정보 세팅
         return "/products/reserve";
     }
 

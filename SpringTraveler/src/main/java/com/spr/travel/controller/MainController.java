@@ -18,18 +18,16 @@ import com.spr.travel.service.ProductService;
 @RequestMapping("/main/*")
 public class MainController {
 
+
 	@Autowired
 	private ProductService productService;
-	
-	
+
+
 	@GetMapping("/main.do")
 	public String main(Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
-		
-		List<Product> list = productService.getProductList();
-		
-		model.addAttribute("list", list);
-		
-		return "main/main";
+		List<Product> list = productService.getProductList();	// 상품정보 전부 가져오기
+		model.addAttribute("list", list);			// 상품정보 세팅
+		return "main/main";										// 메인화면으로 이동
 	}
 
 }
