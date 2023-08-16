@@ -21,13 +21,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
     @Query(nativeQuery = true, value ="select * from product where pro_city = :city")
     public List<Product> findByProCity(String city);
     
-    @Query(nativeQuery = true, value ="select * from product where pro_city = :city")
+    @Query(nativeQuery = true, value ="select max(pro_no) from product")
     public List<Product> findByPro(String city);
 
-    public List<Product> findByProContinent(Product product);
+    public List<Product> findByProContinent(String continent);
 
-    public Product findByProNo(int id);
+//    public Product findByProNoconti(int id);
 
-    @Query(nativeQuery = true, value ="select max(pro_no) from product")
-    public int findByProNo(Product proNo);
+ //   @Query(nativeQuery = true, value ="select max(pro_no) from product")
+//    public Product find(int id);
 }

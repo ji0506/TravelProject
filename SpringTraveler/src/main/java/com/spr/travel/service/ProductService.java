@@ -23,15 +23,17 @@ public class ProductService {
 	}
 
 
-	public List<Product> productSearch(Product search)
+	public List<Product> productSearch(SearchForm search)
 //	public List<Product> productSearch(String country, String departure, String plan, String seat, String city)
 	{
-		return productRepository.findOne(search);
+//		return productRepository.findAll(search);
+//		return productRepository.findOne(search);
 /*		productRepository.findByProCountry(country),
 		productRepository.findByProDeparture(departure),
 		productRepository.findByProPlan(plan),
 		productRepository.findByProSeat(seat),
 		productRepository.findByProCity(city);*/
+		return null;
 	}
 
 	public List<Product> getListBySearch(String country, String departure, String plan, String seat, String city)
@@ -52,16 +54,11 @@ public class ProductService {
 
 
 	public Product getProductById(int id){
-		return productRepository.findByProNo(id);
+		return productRepository.findById(id).get();
 	};
 
 	public void getListByNew (Product product){
 		productRepository.save(product);
-	}
-
-
-	public int getProNo(Product proNo){
-		return productRepository.findByProNo(proNo);
 	}
 
 	public int deleteProduct(int id){
