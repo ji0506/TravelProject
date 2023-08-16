@@ -129,7 +129,7 @@
 	const main = document.querySelector("main");
 
 	document.querySelectorAll(".accordion-body").forEach(tag => tag.addEventListener("click", function () {
-		axios.get("${contextPath}/product/city/" + this.getAttribute("data-city"))
+		axios.get("/product/city/" + this.getAttribute("data-city"))
 			.then(function (response) {
 				let html = makeHtml(response.data);
 				main.innerHTML = html;
@@ -182,7 +182,7 @@
 	main.addEventListener("click", function (event) {
 		const target = event.target;
 		if (target.tagName !== "BUTTON") return;
-		location.href = target.getAttribute("data-num");
+		location.href = '/products/' +target.getAttribute("data-num");
 	});
 
 </script>

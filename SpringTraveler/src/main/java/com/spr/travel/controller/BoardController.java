@@ -37,10 +37,12 @@ public class BoardController {
 		model.addAttribute("boardlist", list); //가져온 게시판 목록을 boardlist 모델에 추가
 		return "board/faq"; //자주 묻는 질문의 페이지를 반환해서 클라이언트에게 보여줌
 	}
+	
 	@GetMapping("/faqWrite.do") //자주 묻는 질문 추가 페이지 get 요청
 	public String faqWriteget(Model model, HttpServletRequest request, HttpServletResponse response)throws Exception {
 		return "board/faqWrite"; // 질문 추가 페이지 반환
 	}
+	
 	@PostMapping("/faqWrite.do") //자주 묻는 질문 추가 페이지 post 요청
 	public String faqWritepost( @RequestParam("faq_category")int cateNo,
 						 @RequestParam("faq_title")String title, @RequestParam("faq_content")String content) throws Exception {
@@ -97,11 +99,12 @@ public class BoardController {
 	public String qnaDetail( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		return "board/qnaDetail";//나의 질문 페이지로 이동
 	}
+	
 	@GetMapping("/notice.do") //공지사항 페이지 get 요청
 	public String notice( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		//게시판 카테고리 번호 6의 공지사항 목록을 가져옴
-		List<Board> list = bs.getBoardCateList(6);
+		List<Notice> list = bs.getNoticeList();
 
 		//공지사항 목록을 모델에 추가하여 전달
 		model.addAttribute("noticeList", list);
@@ -110,13 +113,6 @@ public class BoardController {
 	@GetMapping("/noticeWrite.do") //새글 작성 페이지 get 요청
 	public String noticeWrite( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-//		List<Qna> list = qs.getBoardList();
-//		model.addAttribute("boardlist", list);
-		return "board/noticeWrite";
-	}
-		//Qna 게시판의 전체 게시글 목록을 가져와 추가
-		List<Qna> list = qs.getBoardList();
-		model.addAttribute("boardlist", list);
 
 		return "board/noticeWrite";// 새글 페이지로 이동
 	}
@@ -127,30 +123,15 @@ public class BoardController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 
-		//Board 객체 생성, 데이터 설정
-		Board vo= new Board(title,content,6);
+		//notice 객체 생성, 데이터 설정
 		Notice vo= new Notice(title,content,cate);
 		vo.setUserId(user.getUserId());
 
 		//공지사항 게시글 작성
 		bs.Write(vo);
 
-		return "redirect:/board/notice.do"; //공지사항 페이지로 리다이렉트
-		
-		return "redirect:/board/notice.do";
+		return "redirect:/board/notice.do"; //공지사항 페이지로 리다이렉트		
 	}
 
 	
-	@PostMapping("/qnaWrite.do")
-	public String qnaWrite(@RequestParam("qna_title")String title,
-						   @RequestParam("qna_question")String content, HttpServletRequest request) throws Exception {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-
-		Qna vo= new Qna(title,content);
-		vo.setUserId(user.getUserId());
-		qs.Write(vo);
-		return "redirect:/board/qna.do";
-	}
-
 }
