@@ -52,7 +52,6 @@
 				<span class="visually-hidden">Next</span>
 			</button>
 		</div>
-
 		<div class="row mb-3">
 			<div class="col-1"></div>
 			<div class="col-10 row p-3">
@@ -118,10 +117,10 @@
 			<th:block th:each="item, stat : ${list}" th:if="${stat.index} &lt; 8">
 				<div class="col-md-6 col-xl-3">
 					<div class="card border-0 mx-auto" style="width: 18rem;">
-						<th:block th:if="${1 == katTargetNo}" class="active">
-							<img src="${contextPath}/attach${item.detail_title_image}" class="card-img-top" alt="...">
+						<th:block th:if="${null != item.detail.detailImage}" class="active">
+							<img th:src="${item.detail.detailImage}" class="card-img-top" alt="...">
 						</th:block>
-						<th:block th:unless="${1 == katTargetNo}">
+						<th:block th:unless="${null != item.detail.detailImage}">
 							<img src="https://source.unsplash.com/random" class="card-img-top" alt="...">
 						</th:block>
 	
@@ -129,7 +128,7 @@
 							<h5 class="card-title">[[${item.proName}]]</h5>
 						</div>
 						<div class="card-body">
-							<a href="/products/${item.proNo}" class="btn btn-outline-secondary">바로가기</a>
+							<a th:href="@{/products/{id}(id=${item.proNo})}" class="btn btn-outline-secondary">바로가기</a>
 						</div>
 					</div>
 				</div>

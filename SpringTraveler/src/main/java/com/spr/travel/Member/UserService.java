@@ -15,7 +15,13 @@ public class UserService {
     private  UserRepository userRepository;
 
     public User getLoginUser(String userId) {
-        return userRepository.findById(userId).get();
+    	try {
+            return userRepository.findById(userId).get();
+			
+		} catch (Exception e) {
+			e.fillInStackTrace();
+			return null;
+		}    	
     }
 
     public List<User> getAllUsers() {

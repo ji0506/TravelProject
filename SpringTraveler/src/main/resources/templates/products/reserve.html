@@ -446,21 +446,21 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="inputName">이름</label>
-                            <input required="required" type="text" class="form-control" id="inputName" value="${userInfo.userName}" name="revName;">
+                            <input required="required" type="text" class="form-control" id="inputName" th:value="${user.userName}" name="revName;">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="inputBirth">생년월일</label>
-                            <input required="required" type="text" class="form-control" id="inputBirth" value="${userInfo.userBirth}" name="rev_birth">
+                            <input required="required" type="text" class="form-control" id="inputBirth" th:value="${user.userBirth}" name="rev_birth">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="inputPhone">핸드폰</label>
-                            <input required="required" type="text" class="form-control" id="inputPhone" value="${userInfo.userCp}" name="revPhone;">
+                            <input required="required" type="text" class="form-control" id="inputPhone" th:value="${user.userCp}" name="revPhone;">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="inputEmail">이메일</label>
-                            <input required="required" type="text" class="form-control" id="inputEmail" value="${userInfo.userEmail}" name="rev_email">
+                            <input required="required" type="text" class="form-control" id="inputEmail" th:value="${user.userEmail}" name="rev_email">
                         </div>
-                        <input type="hidden" id="inputMemberId" name="userId" value="${userInfo.userId}">
+                        <input type="hidden" id="inputMemberId" name="userId" th:value="${user.userId}">
                         <div class="text-center">
                             <button id="reserveBtn" class="btn btn-primary">예약확정</button>
                             <button class="btn btn-danger">취소</button>

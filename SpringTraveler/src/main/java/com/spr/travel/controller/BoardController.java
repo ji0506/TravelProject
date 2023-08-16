@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.spr.travel.domain.Qna;
-import com.spr.travel.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,15 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spr.travel.domain.Board;
-import com.spr.travel.domain.Product;
+import com.spr.travel.domain.Notice;
+import com.spr.travel.domain.Qna;
+import com.spr.travel.domain.User;
 import com.spr.travel.service.BoardService;
 import com.spr.travel.service.QnaService;
 
 @Controller
 @RequestMapping("/board/*")
 public class BoardController {
+	
 	@Autowired
 	private BoardService bs;
+	
 	@Autowired
 	private QnaService qs;
 
@@ -108,6 +110,10 @@ public class BoardController {
 	@GetMapping("/noticeWrite.do") //새글 작성 페이지 get 요청
 	public String noticeWrite( Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+//		List<Qna> list = qs.getBoardList();
+//		model.addAttribute("boardlist", list);
+		return "board/noticeWrite";
+	}
 		//Qna 게시판의 전체 게시글 목록을 가져와 추가
 		List<Qna> list = qs.getBoardList();
 		model.addAttribute("boardlist", list);
@@ -123,12 +129,28 @@ public class BoardController {
 
 		//Board 객체 생성, 데이터 설정
 		Board vo= new Board(title,content,6);
+		Notice vo= new Notice(title,content,cate);
 		vo.setUserId(user.getUserId());
 
 		//공지사항 게시글 작성
 		bs.Write(vo);
 
 		return "redirect:/board/notice.do"; //공지사항 페이지로 리다이렉트
+		
+		return "redirect:/board/notice.do";
+	}
+
+	
+	@PostMapping("/qnaWrite.do")
+	public String qnaWrite(@RequestParam("qna_title")String title,
+						   @RequestParam("qna_question")String content, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+
+		Qna vo= new Qna(title,content);
+		vo.setUserId(user.getUserId());
+		qs.Write(vo);
+		return "redirect:/board/qna.do";
 	}
 
 }

@@ -44,9 +44,6 @@ public class UserController {
 		return "member/login2";
 	}
 	
-
-	
-
 	// (회원)마이페이지 출력-예약내역
 	@GetMapping("/myPage")
 	@Transactional
