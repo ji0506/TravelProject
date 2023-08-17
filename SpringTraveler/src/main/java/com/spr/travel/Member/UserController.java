@@ -45,9 +45,6 @@ public class UserController {
 	private ProductService productService;
 
 	@Autowired
-	private JavaMailSender mailSender;
-
-	@Autowired
 	private EmailService emailService;
 
 
@@ -98,7 +95,6 @@ public class UserController {
 
 	@RequestMapping("/save.do")
 	public String save(User user) {
-
 		user.setUserPwd(sha256Hash(user.getUserPwd()));// 비밀번호 암호화
 		userService.createUser(user);		//저장
 

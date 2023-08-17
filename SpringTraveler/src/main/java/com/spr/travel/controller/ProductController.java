@@ -143,12 +143,12 @@ public class ProductController {
     @GetMapping("/{id}/reservation") // 예약 페이지
     public String renderReservationForm(@PathVariable int id, Model model, HttpSession session, RedirectAttributes rttr) {
         User loginMember = (User) session.getAttribute("user"); // 세션 정보 읽기
-        if (loginMember != null) {  //이미 예약시 예외처리
+      /*  if (loginMember != null) {  //이미 예약시 예외처리
             if (reservationService.getReservationOfMember(loginMember.getUserId(), id) != null) {
                 rttr.addFlashAttribute("flashMessage", "이미 예약하신 상품입니다.");
                 return "redirect:/products/" + id;
             }
-        }
+        }*/
         model.addAttribute("product", productService.getProductById(id));   // product 정보 세팅
         return "/products/reserve";
     }

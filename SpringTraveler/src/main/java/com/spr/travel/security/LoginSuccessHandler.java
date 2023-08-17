@@ -17,13 +17,13 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication auth) throws IOException, ServletException {
-		User user = (User) auth.getPrincipal();
-		HttpSession session = request.getSession();
+		User user = (User) auth.getPrincipal();    // 저장된 로그인 정보 가져오기
+		HttpSession session = request.getSession();	
 		
-		if(user != null) {
+		if(user != null) { // 로그인 성공 시 세션 생성
 			session.setAttribute("user", user);
 		}
-		response.sendRedirect("/main/main.do");
+		response.sendRedirect("/main/main.do"); // 메인페이지로 이동
 		
 	}
 
